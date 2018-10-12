@@ -35,5 +35,12 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "arrowParens": "always"
+  }
 }
