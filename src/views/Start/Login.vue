@@ -3,7 +3,7 @@
     <el-row class="wrap">
       <el-col :span="16" class="left">
         <div class="logoWrap">
-          <LogoIcon v-bind:size="33" class="logo"/>
+          <LogoIcon v-bind:size="128" class="logo"/>
         </div>
       </el-col>
       <el-col :span="8" class="right">
@@ -58,9 +58,6 @@ export default class Login extends Vue {
         position: relative;
         height: 100%;
         .logo {
-          margin: 0 auto;
-          vertical-align: middle;
-          display: inline-block;
         }
       }
     }
