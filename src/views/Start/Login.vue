@@ -1,14 +1,14 @@
 <template>
   <div class="start">
     <el-row class="wrap">
-      <el-col :span="12">
-        <div class="left">
-          <h1>logo</h1>
+      <el-col :span="16" class="left">
+        <div class="logoWrap">
+          <LogoIcon v-bind:size="33" class="logo"/>
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8" class="right">
         <div>
-          <h1>login form</h1>
+          <h1>login</h1>
           <el-form>
             <el-form-item>
               <el-input placeholder="请输入用户名"></el-input>
@@ -25,23 +25,49 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import LogoIcon from '@/components/Logo.vue';
 
 @Component({
-  components: {},
+  components: { LogoIcon },
 })
-export default class Home extends Vue {}
+export default class Login extends Vue {
+  private data() {
+    return {
+      style: {
+        margin: '0 auto',
+        height: '256px',
+        verticalAlign: 'middle',
+      },
+    };
+  }
+}
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .start {
   height: 100%;
-  background-color: '#ccc';
-}
-.wrap {
-  background: '#ccc';
-  height: 100%;
-}
-.left {
-  color: '#f00';
-  font-size: 10px;
+  background-color: #ccc;
+  .wrap {
+    background: #ccc;
+    height: 100%;
+    .left {
+      background-color: #f66;
+      color: #fff;
+      font-size: 10px;
+      height: 100%;
+      .logoWrap {
+        position: relative;
+        height: 100%;
+        .logo {
+          margin: 0 auto;
+          vertical-align: middle;
+          display: inline-block;
+        }
+      }
+    }
+    .right {
+      background-color: #fff;
+      height: 100%;
+    }
+  }
 }
 </style>
