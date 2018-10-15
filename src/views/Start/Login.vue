@@ -3,7 +3,7 @@
     <el-row class="wrap">
       <el-col :span="16" class="left">
         <div class="logoWrap">
-          <LogoIcon v-bind:size="128" class="logo"/>
+          <LogoIcon size="128" class="logo" color="#fff"/>
         </div>
       </el-col>
       <el-col :span="8" class="right">
@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import LogoIcon from '@/components/Logo.vue';
+import LogoIcon from '@/components/Logo/index.vue';
 
 @Component({
   components: { LogoIcon },
@@ -51,13 +51,15 @@ export default class Login extends Vue {
     height: 100%;
     .left {
       background-color: #f66;
-      color: #fff;
       font-size: 10px;
       height: 100%;
       .logoWrap {
-        position: relative;
         height: 100%;
         .logo {
+          position: relative;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%)
         }
       }
     }

@@ -20,6 +20,7 @@ export default {
 html, body {
   height: 100%;
   padding: 0;
-  margin: 0
+  margin: 0;
+  font-size: 16px
 }
 </style>
