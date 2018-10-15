@@ -9,9 +9,11 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "element-ui": "^2.4.5",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
+    "url": "^0.11.0",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",

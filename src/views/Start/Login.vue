@@ -1,3 +1,4 @@
+
 <template>
   <div class="start">
     <el-row class="wrap">
@@ -7,13 +8,16 @@
         </div>
       </el-col>
       <el-col :span="8" class="right">
-        <div>
-          <h1>login</h1>
-          <el-form>
+        <div class="form">
+          <el-form :model="ruleForm" :rules="rules" ref="loginForm">
+            <el-form-item prop="username">
+              <el-input placeholder="请输入用户名" v-model="ruleForm.username"></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input placeholder="请输入密码" v-model="ruleForm.password"></el-input>
+            </el-form-item>
             <el-form-item>
-              <el-input placeholder="请输入用户名"></el-input>
-              <el-input placeholder="请输入密码"></el-input>
-              <el-button>登录</el-button>
+              <el-button @click="submitForm()">登录</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -24,21 +28,41 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import LogoIcon from '@/components/Logo/index.vue';
 
 @Component({
   components: { LogoIcon },
 })
 export default class Login extends Vue {
-  private data() {
-    return {
-      style: {
-        margin: '0 auto',
-        height: '256px',
-        verticalAlign: 'middle',
+  public $refs!: {
+    loginForm: HTMLFormElement;
+  };
+  private ruleForm: object = {
+    username: '',
+    password: '',
+  };
+  private rules: object = {
+    username: [
+      { required: true, message: '请输入用户名', trigger: 'blur' },
+      {
+        min: 1,
+        max: 32,
+        message: '长度在 1 到 32 个字符',
+        trigger: 'blur',
       },
-    };
+    ],
+    password: [{ required: true, message: '请输入密码', trigger: 'change' }],
+  };
+
+  private submitForm(): void {
+    this.$refs.loginForm.validate((valid: boolean) => {
+      if (valid) {
+        console.log(this.$store);
+        this.$store.dispatch('user/login', this.$store.state.user)
+        // this.$store
+      }
+    });
   }
 }
 </script>
@@ -59,13 +83,20 @@ export default class Login extends Vue {
           position: relative;
           top: 50%;
           left: 50%;
-          transform: translate(-50%, -50%)
+          transform: translate(-50%, -50%);
         }
       }
     }
     .right {
       background-color: #fff;
       height: 100%;
+      .form {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0 1rem;
+      }
     }
   }
 }
