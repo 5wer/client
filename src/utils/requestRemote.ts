@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import _ from 'lodash';
 import { Message } from 'element-ui';
+export const router = require('../router.ts').default;
 
 const CONTENT_TYPE: string = 'Content-Type';
 const JSON_TYPE: string = 'application/json';

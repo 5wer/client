@@ -1,5 +1,5 @@
 import { login } from './services';
-import { setToken } from '../../../utils/requestRemote';
+import { setToken, router } from '../../../utils/requestRemote';
 
 interface State {
   user: object;
@@ -23,6 +23,7 @@ export default {
         const { user, token } = res.data;
         setToken(token);
         commit('setUser', user);
+        router.push('/main');
       }
     },
   },
