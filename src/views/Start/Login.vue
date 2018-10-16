@@ -58,9 +58,7 @@ export default class Login extends Vue {
   private submitForm(): void {
     this.$refs.loginForm.validate((valid: boolean) => {
       if (valid) {
-        console.log(this.$store);
         this.$store.dispatch('user/login', this.ruleForm);
-        // this.$store
       }
     });
   }

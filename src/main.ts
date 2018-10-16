@@ -5,9 +5,8 @@ import store from './store';
 import './plugins/element.js';
 
 Vue.config.productionTip = false;
-
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  render: h => h(App),
 }).$mount('#app');

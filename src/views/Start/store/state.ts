@@ -1,36 +1,29 @@
-// import Vuex from 'vuex';
-// import { Vue } from 'vue-property-decorator';
-
 import { login } from './services';
+import { setToken } from '../../../utils/requestRemote';
 
-// Vue.use(Vuex);
-
-// export default new Vuex.Store({
-//   strict: process.env.NODE_ENV !== 'production',
-//   state: {
-//     hello: 'world',
-//     user: {},
-//   },
-//   mutations: {},
-//   actions: {
-//     async login({ commit }, data: object) {
-//       commit('gotData', await login(data));
-//     },
-//   },
-//   getters: {},
-// });
+interface State {
+  user: object;
+}
 
 export default {
   namespaced: true,
   strict: process.env.NODE_ENV !== 'production',
   state: {
-    hello: 'world',
     user: {},
   },
-  mutations: {},
+  mutations: {
+    setUser(state: State, user: object) {
+      state.user = user;
+    },
+  },
   actions: {
     async login({ commit }: { commit: any }, data: object) {
-      commit('gotData', await login(data));
+      const res = await login(data);
+      if (res) {
+        const { user, token } = res.data;
+        setToken(token);
+        commit('setUser', user);
+      }
     },
   },
   getters: {},
