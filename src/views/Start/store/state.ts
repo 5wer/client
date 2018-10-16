@@ -1,8 +1,7 @@
-
 // import Vuex from 'vuex';
 // import { Vue } from 'vue-property-decorator';
 
-import {login} from './services';
+import { login } from './services';
 
 // Vue.use(Vuex);
 
@@ -30,9 +29,9 @@ export default {
   },
   mutations: {},
   actions: {
-    async login({ commit }: {commit: any}, data: object) {
+    async login({ commit }: { commit: any }, data: object) {
       commit('gotData', await login(data));
     },
   },
   getters: {},
-}
+};

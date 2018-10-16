@@ -5,9 +5,4 @@ declare const del: Function;
 declare const put: Function;
 
 export default request;
-export {
-  get,
-  post,
-  del,
-  put,
-}
+export { get, post, del, put };

@@ -4,7 +4,7 @@
     <el-row class="wrap">
       <el-col :span="16" class="left">
         <div class="logoWrap">
-          <LogoIcon size="128" class="logo" color="#fff"/>
+          <LogoIcon size="128" class="logo" color="#fff" />
         </div>
       </el-col>
       <el-col :span="8" class="right">
@@ -59,7 +59,7 @@ export default class Login extends Vue {
     this.$refs.loginForm.validate((valid: boolean) => {
       if (valid) {
         console.log(this.$store);
-        this.$store.dispatch('user/login', this.ruleForm)
+        this.$store.dispatch('user/login', this.ruleForm);
         // this.$store
       }
     });
