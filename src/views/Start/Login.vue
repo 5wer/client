@@ -17,7 +17,11 @@
               <el-input placeholder="请输入密码" v-model="ruleForm.password"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button @click="submitForm()">登录</el-button>
+              <el-button type="primary" :style="{width: '100%'}" @click="submitForm()">登录</el-button>
+              <div style="height:10px" />
+              <el-button type="danger" :style="{width: '100%'}" @click="registe()">免费注册</el-button>
+            </el-form-item>
+            <el-form-item>
             </el-form-item>
           </el-form>
         </div>
@@ -30,6 +34,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import LogoIcon from '@/components/Logo/index.vue';
+import router from '../../router';
 
 @Component({
   components: { LogoIcon },
@@ -61,6 +66,9 @@ export default class Login extends Vue {
         this.$store.dispatch('user/login', this.ruleForm);
       }
     });
+  }
+  private registe(): void {
+    this.$router.push('/registe');
   }
 }
 </script>
