@@ -1,14 +1,20 @@
 <template>
   <el-container class="layout">
     <el-header class="headWrap" height="3rem">
+      <el-row type="flex" class="row-bg" justify="center">
+        <el-col :xs="24" :sm="24" :md="22" :lg="20" :xl="16">
 
-      <Head height="3rem" />
+          <Head height="3rem" />
+        </el-col>
+      </el-row>
     </el-header>
     <el-main>
-      <Menu />
-      <router-link to="/main/home">home</router-link>
-      <router-link to="/main/home2">home2</router-link>
-      <router-view />
+      <el-row type="flex" class="row-bg" justify="center">
+        <el-col :xs="24" :sm="24" :md="22" :lg="20" :xl="16">
+          <Menu />
+          <router-view />
+        </el-col>
+      </el-row>
     </el-main>
   </el-container>
 </template>
@@ -31,6 +37,7 @@ export default class Home extends Vue {
   }
   @Watch('$route')
   private routerChange(val: Route, old: Route) {
+    console.log(val.path)
     this.getUserInfo();
   }
 

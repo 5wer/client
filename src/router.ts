@@ -38,9 +38,9 @@ export default new Router({
           ],
         },
         {
-          path: 'home2',
-          name: 'home2',
-          component: () => import('./views/Home/Index.vue'),
+          path: 'editor',
+          name: 'editor',
+          component: () => import('./views/Editor/Index.vue'),
         },
       ],
     },

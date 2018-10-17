@@ -14,6 +14,7 @@ export default {
   },
   mutations: {
     setUser(state: State, user: object) {
+      console.log('user', user);
       state.user = user;
     },
   },
@@ -36,6 +37,7 @@ export default {
           if (!user) {
             user = res.data;
           }
+          console.log(user);
           commit('setUser', user);
         }
       }

@@ -577,9 +577,21 @@
   version "1.1.2"
   resolved "http://registry.npm.taobao.org/@nodelib/fs.stat/download/@nodelib/fs.stat-1.1.2.tgz#54c5a964462be3d4d78af631363c18d6fa91ac26"
 
+"@tinymce/tinymce-vue@^1.1.0":
+  version "1.1.0"
+  resolved "http://registry.npm.taobao.org/@tinymce/tinymce-vue/download/@tinymce/tinymce-vue-1.1.0.tgz#ff58fb2658f5a7d1abcb7ed5e01bf570da671a81"
+  dependencies:
+    vue "^2.5.13"
+
 "@types/chai@^4.1.0":
   version "4.1.6"
   resolved "http://registry.npm.taobao.org/@types/chai/download/@types/chai-4.1.6.tgz#1eb26c040e3a84205b1008ad55c800e5e8a94e34"
+
+"@types/jquery@*":
+  version "3.3.19"
+  resolved "http://registry.npm.taobao.org/@types/jquery/download/@types/jquery-3.3.19.tgz#ebb1e86c89e8e6fe2797bf3206843a114831958b"
+  dependencies:
+    "@types/sizzle" "*"
 
 "@types/lodash@^4.14.117":
   version "4.14.117"
@@ -588,6 +600,16 @@
 "@types/mocha@^5.2.4":
   version "5.2.5"
   resolved "http://registry.npm.taobao.org/@types/mocha/download/@types/mocha-5.2.5.tgz#8a4accfc403c124a0bafe8a9fc61a05ec1032073"
+
+"@types/sizzle@*":
+  version "2.3.2"
+  resolved "http://registry.npm.taobao.org/@types/sizzle/download/@types/sizzle-2.3.2.tgz#a811b8c18e2babab7d542b3365887ae2e4d9de47"
+
+"@types/tinymce@^4.5.16":
+  version "4.5.16"
+  resolved "http://registry.npm.taobao.org/@types/tinymce/download/@types/tinymce-4.5.16.tgz#d6184583296d9bef5c0fe1c00457e45950009094"
+  dependencies:
+    "@types/jquery" "*"
 
 "@types/webpack-env@^1.13.6":
   version "1.13.6"
@@ -6536,7 +6558,7 @@ vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
 
-vue@^2.5.17:
+vue@^2.5.13, vue@^2.5.17:
   version "2.5.17"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
 
