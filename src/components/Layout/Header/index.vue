@@ -8,7 +8,7 @@
     </el-col>
     <el-col :span="8" class="headRight">
       <div class="colInner" :style="{lineHeight: height}">
-        <UserTitle />
+        <user-title />
       </div>
     </el-col>
   </el-row>
@@ -20,7 +20,9 @@ import LogoIcon from '@/components/Logo/index.vue';
 import UserTitle from './Right.vue';
 import router from '../../../router';
 
-@Component({ components: { LogoIcon, UserTitle } })
+@Component({
+  components: { LogoIcon, UserTitle },
+})
 export default class Head extends Vue {
   @Prop()
   private height!: string;

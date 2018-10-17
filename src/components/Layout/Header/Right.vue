@@ -18,7 +18,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { router } from '../../../utils/requestRemote';
 
-@Component
+@Component({})
 export default class UserTitle extends Vue {
   public data = this.$store.state.user.user;
   private get avatar() {
