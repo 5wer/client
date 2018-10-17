@@ -29,7 +29,7 @@ export default class UserTitle extends Vue {
   }
   private editor() {
       console.log('00000')
-      router.push('/main/editor')
+      router.push('/editor')
   }
   @Watch('$store.state.user.user')
   private storeChange(val: any, old: any) {

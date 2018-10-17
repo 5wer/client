@@ -37,12 +37,13 @@ export default new Router({
             },
           ],
         },
-        {
-          path: 'editor',
-          name: 'editor',
-          component: () => import('./views/Editor/Index.vue'),
-        },
       ],
+    },
+
+    {
+      path: '/editor',
+      name: 'editor',
+      component: () => import('./views/Editor/Index.vue'),
     },
   ],
 });
