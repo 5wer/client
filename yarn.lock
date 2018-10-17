@@ -2477,6 +2477,13 @@ escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
+eslint-plugin-prettier@^2.2.0:
+  version "2.7.0"
+  resolved "http://registry.npm.taobao.org/eslint-plugin-prettier/download/eslint-plugin-prettier-2.7.0.tgz#b4312dcf2c1d965379d7f9d5b5f8aaadc6a45904"
+  dependencies:
+    fast-diff "^1.1.1"
+    jest-docblock "^21.0.0"
+
 eslint-scope@^4.0.0:
   version "4.0.0"
   resolved "http://registry.npm.taobao.org/eslint-scope/download/eslint-scope-4.0.0.tgz#50bf3071e9338bcdc43331794a0cb533f0136172"
@@ -2681,6 +2688,10 @@ fast-deep-equal@^1.0.0:
 fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "http://registry.npm.taobao.org/fast-deep-equal/download/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
+
+fast-diff@^1.1.1:
+  version "1.2.0"
+  resolved "http://registry.npm.taobao.org/fast-diff/download/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
 
 fast-glob@^2.0.2:
   version "2.2.3"
@@ -3674,6 +3685,10 @@ isstream@~0.1.2:
 javascript-stringify@^1.6.0:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/javascript-stringify/download/javascript-stringify-1.6.0.tgz#142d111f3a6e3dae8f4a9afd77d45855b5a9cce3"
+
+jest-docblock@^21.0.0:
+  version "21.2.0"
+  resolved "http://registry.npm.taobao.org/jest-docblock/download/jest-docblock-21.2.0.tgz#51529c3b30d5fd159da60c27ceedc195faf8d414"
 
 joi@^13.0.0:
   version "13.7.0"
@@ -5166,6 +5181,10 @@ prettier@1.13.7:
   version "1.13.7"
   resolved "http://registry.npm.taobao.org/prettier/download/prettier-1.13.7.tgz#850f3b8af784a49a6ea2d2eaa7ed1428a34b7281"
 
+prettier@^1.14.3:
+  version "1.14.3"
+  resolved "http://registry.npm.taobao.org/prettier/download/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
+
 pretty-error@^2.0.2:
   version "2.1.1"
   resolved "http://registry.npm.taobao.org/pretty-error/download/pretty-error-2.1.1.tgz#5f4f87c8f91e5ae3f3ba87ab4cf5e03b1a17f1a3"
@@ -6188,13 +6207,20 @@ ts-loader@^4.4.2:
     micromatch "^3.1.4"
     semver "^5.0.1"
 
-tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.3"
   resolved "http://registry.npm.taobao.org/tslib/download/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
 
 tslint-config-prettier@^1.15.0:
   version "1.15.0"
   resolved "http://registry.npm.taobao.org/tslint-config-prettier/download/tslint-config-prettier-1.15.0.tgz#76b9714399004ab6831fdcf76d89b73691c812cf"
+
+tslint-plugin-prettier@^2.0.0:
+  version "2.0.0"
+  resolved "http://registry.npm.taobao.org/tslint-plugin-prettier/download/tslint-plugin-prettier-2.0.0.tgz#ade328b26c71f37418d4d01187dca232a7447b49"
+  dependencies:
+    eslint-plugin-prettier "^2.2.0"
+    tslib "^1.7.1"
 
 tslint@^5.10.0:
   version "5.11.0"

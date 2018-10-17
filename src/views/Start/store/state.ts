@@ -1,8 +1,9 @@
-import { login } from './services';
+import _ from 'lodash';
+import { login, getUserInfo } from './services';
 import { setToken, router } from '../../../utils/requestRemote';
 
 interface State {
-  user: object;
+  [key: string]: any;
 }
 
 export default {
@@ -23,9 +24,26 @@ export default {
         const { user, token } = res.data;
         setToken(token);
         commit('setUser', user);
-        router.push('/main');
+        await router.push('/main');
+      }
+    },
+    async getUserInfo({ commit, state }: { commit: any; state: any }) {
+      if (_.isEmpty(state.user)) {
+        const res = await getUserInfo();
+        if (res) {
+          // api-login的返回值的data中包含token和user, 但是api-getUserInfo的返回值的data本身就是user
+          let { user } = res.data;
+          if (!user) {
+            user = res.data;
+          }
+          commit('setUser', user);
+        }
       }
     },
   },
-  getters: {},
+  getters: {
+    hello() {
+      return 'hello';
+    },
+  },
 };

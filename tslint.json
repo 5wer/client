@@ -1,3 +1,7 @@
 {
-  "extend": ["tslint:recommended", "tslint-config-prettier"]
+  "extend": ["tslint:recommended", "tslint-config-prettier"],
+  "rulesDirectory": ["tslint-plugin-prettier"],
+  "rules": {
+    "prettier": true
+  }
 }

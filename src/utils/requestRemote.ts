@@ -46,7 +46,7 @@ export function checkStatus(data: ResData) {
   return Promise.resolve(data);
 }
 interface Options {
-  data: {
+  data?: {
     [key: string]: string;
   };
   method: string;
@@ -67,6 +67,10 @@ export default function request(
   switch (method.toUpperCase()) {
     case 'GET':
     case 'DELETE': {
+      delete options.data;
+      if (!data) {
+        break;
+      }
       const _url = (function(url, data): string {
         let query: string = '?';
         for (let d in data) {
@@ -78,7 +82,6 @@ export default function request(
         return `${url}${query}`;
       })(url, data);
       options.url = _url;
-      delete options.data;
       break;
     }
     case 'POST':
@@ -97,7 +100,7 @@ export default function request(
 }
 const createMethod = (method: string) => (
   url: string,
-  data: any,
+  data?: any,
   other?: object,
 ) => {
   return request(url, { method, data }, other);

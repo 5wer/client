@@ -4,15 +4,9 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    root: 'rootState',
-  },
+  state: {},
   mutations: {},
-  actions: {
-    login() {
-      console.log('root action');
-    },
-  },
+  actions: {},
   modules: {
     user: {
       namespaced: true,
