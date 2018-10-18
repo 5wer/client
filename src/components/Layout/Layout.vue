@@ -37,7 +37,6 @@ export default class Home extends Vue {
   }
   @Watch('$route')
   private routerChange(val: Route, old: Route) {
-    console.log(val.path)
     this.getUserInfo();
   }
 

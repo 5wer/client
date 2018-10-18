@@ -10,7 +10,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
-export default class Logo extends Vue {
+export default class LogoIcon extends Vue {
   // 如果prop没有非空校验符就需要要有默认值, 在修饰符@Propde option中加入default属性定义的初始值不行
   // 必须给成员直接赋值, 这个值就是默认值
   @Prop({ default: 256 })

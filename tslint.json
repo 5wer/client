@@ -1,7 +1,10 @@
 {
-  "extend": ["tslint:recommended", "tslint-config-prettier"],
-  "rulesDirectory": ["tslint-plugin-prettier"],
+  "extends": "tslint-config-airbnb",
   "rules": {
-    "prettier": true
+    "import-name": false,
+    "space-before-function-paren": [
+      true,
+      { "anonymous": "never", "named": "never", "asyncArrow": "always" }
+    ]
   }
 }

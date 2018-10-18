@@ -6,7 +6,7 @@ export const router = require('../router.ts').default;
 const CONTENT_TYPE: string = 'Content-Type';
 const JSON_TYPE: string = 'application/json';
 
-let baseURL: string = 'http://localhost:3000/';
+const baseURL: string = 'http://localhost:3000/';
 let token: string = '';
 export function setToken(t: string): void {
   if (t === '') {
@@ -14,9 +14,8 @@ export function setToken(t: string): void {
     window.sessionStorage.removeItem('token');
     return;
   }
-  const _token: string = `Bearer ${t}`;
-  window.sessionStorage.setItem('token', _token);
-  token = _token;
+  token = `Bearer ${t}`;
+  window.sessionStorage.setItem('token', token);
 }
 function getToken() {
   if (token) {
@@ -71,9 +70,9 @@ export default function request(
       if (!data) {
         break;
       }
-      const _url = (function(url, data): string {
+      const uri = (function(url, data): string {
         let query: string = '?';
-        for (let d in data) {
+        for (const d in data) {
           if (data.hasOwnProperty(d)) {
             query += `${d}=${data[d]}&`;
           }
@@ -81,7 +80,7 @@ export default function request(
         query.replace(/\&$/, '');
         return `${url}${query}`;
       })(url, data);
-      options.url = _url;
+      options.url = uri;
       break;
     }
     case 'POST':
