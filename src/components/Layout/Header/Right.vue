@@ -28,8 +28,7 @@ export default class UserTitle extends Vue {
     return this.data.username;
   }
   private editor() {
-    console.log('00000');
-    router.push('/main/editor');
+    router.push('/editor');
   }
   @Watch('$store.state.user.user')
   private storeChange(val: any, old: any) {
