@@ -12,10 +12,23 @@ interface Item {
 })
 export default class ItemBtnGroup extends Vue {
   @Prop()
-  items?: Item[] | null = [];
+  items?: Item[] | null;
   @Prop()
-  id?: string = '';
+  id?: string;
+  private show: boolean = false;
+  clickHandle(e: Event): void {
+    e.preventDefault();
+    e.stopPropagation();
+  }
   render() {
-    return <div>{this.$slots.default}</div>;
+    // if (this.show) {
+    //   return <div></div>;
+    // }
+    // return null;
+    return (
+      <div on-click={() => console.log('dfdf')}>
+        <el-button on-click={this.clickHandle} icon="el-icon-setting" circle size="medium" type="text" />
+      </div>
+    );
   }
 }
