@@ -45,8 +45,6 @@ export default class Head extends Vue {
   .headLeft {
     text-align: left;
   }
-  .headCenter {
-  }
   .headRight {
     text-align: right;
   }

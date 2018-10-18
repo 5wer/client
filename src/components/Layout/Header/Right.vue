@@ -1,10 +1,21 @@
 <template>
   <div class="right">
     <div class="add">
-      <el-button @click="editor()" icon="el-icon-plus" size="small" type="primary">写文章</el-button>
+      <el-button
+        @click="editor()"
+        icon="el-icon-plus"
+        size="small"
+        type="primary"
+      >写文章</el-button>
     </div>
-    <img class="avatar" v-bind:src="avatar" />
-    <el-dropdown split-button type="text">
+    <img
+      class="avatar"
+      v-bind:src="avatar"
+    />
+    <el-dropdown
+      split-button
+      type="text"
+    >
       {{username}}
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>个人中心</el-dropdown-item>
@@ -37,8 +48,6 @@ export default class UserTitle extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.right {
-}
 .avatar {
   width: 1.5rem;
   display: inline-block;
