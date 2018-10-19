@@ -1,37 +1,55 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import Test from './Test';
+import { Item } from './Books';
+import './styles.less';
 
-interface Item {
-  name: string;
-  click: (e: Event, id: string) => void;
-  disabled: boolean;
+@Component({})
+export class ItemDom extends Vue {
+  @Prop() item!: Item;
+  render() {
+    console.log('--------------', this.item);
+    return <div>{this.item.name}</div>;
+  }
 }
 
 @Component({
-  components: { Test },
+  components: { ItemDom },
 })
 export default class ItemBtnGroup extends Vue {
-  @Prop() items?: Item[] | null;
-  @Prop() id?: string;
+  @Prop({ default: [] })
+  items!: Item[];
+  @Prop() itemId?: string;
   private show: boolean = false;
-  clickHandle(e: Event): void {
+  private point: number[] | null = null;
+  trigger(e: MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
+    if (!this.point) {
+      this.point = [e.clientX, e.clientY];
+    } else {
+      this.point = null;
+    }
+    this.show = !this.show;
   }
   render() {
-    // if (this.show) {
-    //   return <div></div>;
-    // }
-    // return null;
     return (
-      <div on-click={() => console.log('dfdf')}>
+      <div>
         <el-button
-          on-click={this.clickHandle}
+          on-click={this.trigger}
           icon="el-icon-setting"
           circle
           size="medium"
           type="text"
         />
+        {this.show ? (
+          <div class="btnGroup" on-click={this.trigger}>
+            <div
+              class="btnsWrap"
+              style={this.point ? { left: `${this.point[0]}px`, top: `${this.point[1]}px` } : null}
+            >
+              {this.items.map(item => <item-dom item={item} />)}
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   }

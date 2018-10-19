@@ -1,0 +1,47 @@
+@height: 2.5rem;
+.buttonWrap {
+  padding: 0.5rem 0;
+  background-color: #eee;
+  .backBtn {
+    margin: 0 auto;
+    display: block;
+    width: 128px;
+  }
+}
+.addBookBtn {
+  display: block;
+  margin: 0 0 0 10px;
+}
+.books {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  li {
+    position: relative;
+    padding: 0 0.5rem;
+    border-left: 0.25rem solid transparent;
+    color: #666;
+    height: @height;
+    line-height: @height;
+    cursor: pointer;
+    &:hover {
+      color: #000;
+      background-color: #e5e5e5;
+    }
+    &.active,
+    &.active:hover {
+      border-left-color: #f56c6c;
+      background-color: #eee;
+      color: #000;
+    }
+    .itemBtnGroup {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: @height;
+      line-height: @height;
+      width: @height;
+      text-align: center;
+    }
+  }
+}

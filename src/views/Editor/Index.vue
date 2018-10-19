@@ -10,7 +10,7 @@
           class="editorList"
         >
           <div class="books">
-            <Books />
+            <Books wokao="2" />
           </div>
         </el-col>
         <el-col
@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import Books from './Books.vue';
+import Books from './Books';
 import Test from './Test';
 
 @Component({
