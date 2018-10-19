@@ -11,10 +11,8 @@ interface Item {
   components: { Test },
 })
 export default class ItemBtnGroup extends Vue {
-  @Prop()
-  items?: Item[] | null;
-  @Prop()
-  id?: string;
+  @Prop() items?: Item[] | null;
+  @Prop() id?: string;
   private show: boolean = false;
   clickHandle(e: Event): void {
     e.preventDefault();
@@ -27,7 +25,13 @@ export default class ItemBtnGroup extends Vue {
     // return null;
     return (
       <div on-click={() => console.log('dfdf')}>
-        <el-button on-click={this.clickHandle} icon="el-icon-setting" circle size="medium" type="text" />
+        <el-button
+          on-click={this.clickHandle}
+          icon="el-icon-setting"
+          circle
+          size="medium"
+          type="text"
+        />
       </div>
     );
   }
