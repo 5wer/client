@@ -16,11 +16,7 @@ export class ItemDom extends Vue {
   }
   render() {
     return (
-      <div
-        on-click={
-          this.proxyClick ? this.proxyClick.bind(null, this.id) : () => null
-        }
-      >
+      <div on-click={this.proxyClick ? this.proxyClick.bind(null, this.id) : () => null}>
         {this.item.name}
       </div>
     );
@@ -61,11 +57,7 @@ export default class ItemBtnGroup extends Vue {
           <div class="btnGroup" on-click={this.trigger}>
             <div
               class="btnsWrap"
-              style={
-                this.point
-                  ? { left: `${this.point[0]}px`, top: `${this.point[1]}px` }
-                  : null
-              }
+              style={this.point ? { left: `${this.point[0]}px`, top: `${this.point[1]}px` } : null}
             >
               {this.items.map((item, index) => (
                 <item-dom key={`options_${index}`} item={item} />
