@@ -29,7 +29,11 @@ export default class Books extends Vue {
     { id: '00002', name: '文集1', status: 1 },
     { id: '00003', name: '文集2', status: 1 },
   ];
-  items: Item[] = [{ name: '修改' }, { name: '删除' }, { name: '其他' }];
+  items: Item[] = [
+    { name: '修改', click: (id) => { console.log(id); } },
+    { name: '删除', click: (id) => { console.log(id); } },
+    { name: '其他' },
+  ];
   private activeBook: string = '00001';
 
   private changeBook(id: string, e: MouseEvent): void {

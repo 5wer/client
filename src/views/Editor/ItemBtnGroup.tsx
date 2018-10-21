@@ -1,13 +1,29 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { Item } from './Books';
-import './styles.less';
 
-@Component({})
+@Component
 export class ItemDom extends Vue {
-  @Prop() item!: Item;
+  @Prop()
+  item!: Item;
+  @Prop()
+  id!: string;
+  @Prop()
+  click?: (id: string, e: MouseEvent) => void;
+  proxyClick(id: string, e: MouseEvent): void {
+    if (this.click) {
+      return this.click(id, e);
+    }
+  }
   render() {
-    console.log('--------------', this.item);
-    return <div>{this.item.name}</div>;
+    return (
+      <div
+        on-click={
+          this.proxyClick ? this.proxyClick.bind(null, this.id) : () => null
+        }
+      >
+        {this.item.name}
+      </div>
+    );
   }
 }
 
@@ -15,9 +31,10 @@ export class ItemDom extends Vue {
   components: { ItemDom },
 })
 export default class ItemBtnGroup extends Vue {
-  @Prop({ default: [] })
+  @Prop()
   items!: Item[];
-  @Prop() itemId?: string;
+  @Prop()
+  itemId?: string;
   private show: boolean = false;
   private point: number[] | null = null;
   trigger(e: MouseEvent) {
@@ -44,9 +61,15 @@ export default class ItemBtnGroup extends Vue {
           <div class="btnGroup" on-click={this.trigger}>
             <div
               class="btnsWrap"
-              style={this.point ? { left: `${this.point[0]}px`, top: `${this.point[1]}px` } : null}
+              style={
+                this.point
+                  ? { left: `${this.point[0]}px`, top: `${this.point[1]}px` }
+                  : null
+              }
             >
-              {this.items.map(item => <item-dom item={item} />)}
+              {this.items.map((item, index) => (
+                <item-dom key={`options_${index}`} item={item} />
+              ))}
             </div>
           </div>
         ) : null}
