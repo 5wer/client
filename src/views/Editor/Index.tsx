@@ -1,6 +1,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import Books from './Books';
 import Test from './Test';
+import './styles.less';
 
 @Component({
   components: { Books },

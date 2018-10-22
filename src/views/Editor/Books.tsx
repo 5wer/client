@@ -1,18 +1,12 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import _ from 'lodash';
-import ItemBtnGroup from './ItemBtnGroup';
+import ItemBtnGroup, { Item } from './ItemBtnGroup';
 import './books.less';
 
 export interface Book {
   name: string;
   id: string;
   status?: number;
-}
-
-export interface Item {
-  name: string;
-  click?: (id: string, e: MouseEvent) => void;
-  disabled?: boolean;
 }
 
 /* TODO
@@ -30,9 +24,43 @@ export default class Books extends Vue {
     { id: '00003', name: '文集2', status: 1 },
   ];
   items: Item[] = [
-    { name: '修改', click: (id) => { console.log(id); } },
-    { name: '删除', click: (id) => { console.log(id); } },
-    { name: '其他' },
+    {
+      name: '修改',
+      click: (id, e) => {
+        console.log(id, e);
+        return true;
+      },
+    },
+    {
+      name: '删除',
+      click: (id) => {
+        console.log(id);
+      },
+    },
+    {
+      name: '其他',
+      disabled: true,
+      children: [
+        {
+          name: 'hello',
+          children: [
+            {
+              name: 'the 3dr',
+            },
+            {
+              name: '9999999',
+            },
+          ],
+        },
+        {
+          name: 'world',
+          click: (id) => {
+            console.log('world');
+            return true;
+          },
+        },
+      ],
+    },
   ];
   private activeBook: string = '00001';
 
@@ -55,7 +83,7 @@ export default class Books extends Vue {
           >
             {d.name}
             <div class="itemBtnGroup">
-              <item-btn-group items={this.items} />
+              <item-btn-group items={this.items} id={d.id} />
             </div>
           </li>
         );

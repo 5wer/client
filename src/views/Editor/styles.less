@@ -1,3 +1,5 @@
+@width: 8rem;
+
 .btnGroup {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -7,11 +9,28 @@
   top: 0;
   z-index: 100;
   .btnsWrap {
-    position: fixed;
+    position: relative;
     z-index: 101;
-    background: #fff;
-    height: 100px;
-    width: 100px;
+    max-height: 15rem;
+    width: @width;
+    .item {
+      position: relative;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      .itemChildren {
+        position: absolute;
+        right: -@width;
+        width: @width;
+        top: 0;
+        display: none;
+      }
+      &:hover {
+        background: #ddd;
+      }
+      &:hover > .itemChildren {
+        display: block;
+      }
+    }
   }
 }
 
@@ -23,7 +42,7 @@
   }
   .editorAside {
     background-color: #ddd;
-    min-width: 320px;
+    min-width: 20rem;
     .el-row {
       height: 100%;
     }

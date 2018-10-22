@@ -1,23 +1,36 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Item } from './Books';
+import _ from 'lodash';
 
+/**
+ * @param name 按钮的名称
+ *
+ */
+export interface Item {
+  name: string;
+  click?: (id: string, e: MouseEvent) => void | boolean;
+  disabled?: boolean;
+  children?: Item[];
+}
 @Component
-export class ItemDom extends Vue {
+class ItemDom extends Vue {
   @Prop()
-  item!: Item;
+  name!: string;
   @Prop()
-  id!: string;
+  disabled?: boolean;
   @Prop()
-  click?: (id: string, e: MouseEvent) => void;
-  proxyClick(id: string, e: MouseEvent): void {
-    if (this.click) {
-      return this.click(id, e);
+  clickHandle!: Function;
+  private onClick(e: MouseEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!this.disabled) {
+      this.clickHandle(e);
     }
   }
   render() {
     return (
-      <div on-click={this.proxyClick ? this.proxyClick.bind(null, this.id) : () => null}>
-        {this.item.name}
+      <div class="item" onClick={this.onClick}>
+        {this.name}
+        {this.$slots.default ? <div class="itemChildren">{this.$slots.default}</div> : null}
       </div>
     );
   }
@@ -30,38 +43,75 @@ export default class ItemBtnGroup extends Vue {
   @Prop()
   items!: Item[];
   @Prop()
-  itemId?: string;
+  id?: string;
   private show: boolean = false;
   private point: number[] | null = null;
-  trigger(e: MouseEvent) {
+  private trigger(c: number, e: MouseEvent) {
+    if (!this.point) {
+      this.open([e.clientX, e.clientY]);
+    } else {
+      this.shutDown();
+    }
+  }
+  private open(point: number[]) {
+    this.point = point;
+    this.show = true;
+  }
+  private shutDown() {
+    this.show = false;
+    this.point = null;
+  }
+  private proxyClick(fn: null | Function, e: MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    if (!this.point) {
-      this.point = [e.clientX, e.clientY];
-    } else {
-      this.point = null;
+    if (fn) {
+      const shut = fn(this.id, e);
+      if (shut) {
+        this.shutDown();
+      }
     }
-    this.show = !this.show;
+  }
+  private renderItems(items: Item[]): any {
+    return _.map(items, (item, index) => {
+      if (_.isArray(item.children) && item.children.length > 0) {
+        return (
+          <item-dom
+            key={`options_${index}`}
+            name={item.name}
+            clickHandle={this.proxyClick.bind(null, item.click)}
+            disabled={item.disabled}
+          >
+            {this.renderItems(item.children)}
+          </item-dom>
+        );
+      }
+      return (
+        <item-dom
+          key={`options_${index}`}
+          name={item.name}
+          clickHandle={this.proxyClick.bind(null, item.click)}
+          disabled={item.disabled}
+        />
+      );
+    });
   }
   render() {
     return (
       <div>
         <el-button
-          on-click={this.trigger}
+          onClick={this.trigger.bind(null, 2)}
           icon="el-icon-setting"
           circle
           size="medium"
           type="text"
         />
         {this.show ? (
-          <div class="btnGroup" on-click={this.trigger}>
+          <div class="btnGroup" onClick={this.trigger.bind(null, 1)}>
             <div
               class="btnsWrap"
               style={this.point ? { left: `${this.point[0]}px`, top: `${this.point[1]}px` } : null}
             >
-              {this.items.map((item, index) => (
-                <item-dom key={`options_${index}`} item={item} />
-              ))}
+              {this.renderItems(this.items)}
             </div>
           </div>
         ) : null}

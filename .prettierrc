@@ -1,5 +1,6 @@
 {
     "printWidth": 100,
+    "arrowParens": "always",
     "eslintIntegration": true,
     "stylelintIntegration": true,
     "tabWidth": 2,
