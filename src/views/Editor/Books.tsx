@@ -68,7 +68,7 @@ export default class Books extends Vue {
     e.stopPropagation();
     this.activeBook = id;
   }
-  @Watch('$store.state.editoer.nodebooks')
+  @Watch('$store.state.books.books')
   private storeChange(val: Book[], old: Book[]) {
     this.data = val;
   }
@@ -90,6 +90,9 @@ export default class Books extends Vue {
       });
     }
     return '暂无文集';
+  }
+  mounted() {
+    this.$store.dispatch('books/getBooks');
   }
   render() {
     return (

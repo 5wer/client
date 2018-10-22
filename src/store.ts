@@ -12,5 +12,9 @@ export default new Vuex.Store({
       namespaced: true,
       ...require('./views/Start/store/state').default,
     },
+    books: {
+      namespaced: true,
+      ...require('./views/Editor/store/books').default,
+    },
   },
 });
