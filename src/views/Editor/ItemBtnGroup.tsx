@@ -7,7 +7,7 @@ import _ from 'lodash';
  */
 export interface Item {
   name: string;
-  click?: (id: string, e: MouseEvent) => void | boolean;
+  click?: (id: string, name: string, e: MouseEvent) => void | boolean;
   disabled?: boolean;
   children?: Item[];
 }
@@ -44,6 +44,8 @@ export default class ItemBtnGroup extends Vue {
   items!: Item[];
   @Prop()
   id?: string;
+  @Prop()
+  name?: string;
   private show: boolean = false;
   private point: number[] | null = null;
   private trigger(c: number, e: MouseEvent) {
@@ -65,7 +67,7 @@ export default class ItemBtnGroup extends Vue {
     e.preventDefault();
     e.stopPropagation();
     if (fn) {
-      const shut = fn(this.id, e);
+      const shut = fn(this.id, this.name, e);
       if (shut) {
         this.shutDown();
       }
