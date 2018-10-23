@@ -25,7 +25,7 @@ export default MyComponent extends Vue {
 
 ### 原来.vue 文件里 \<script lang="tsx"\>标签也可以使用 tsx 语法, 并不必须使用.tsx 文件
 
-# 今天早上开箱子除了 Crow, 爽!!(2018-10-21)
+# 今天早上开箱子出了 Crow, 爽!!(2018-10-21)
 
 ### prettier now 插件有个问题(2018-10-21)
 
@@ -38,7 +38,7 @@ export default MyComponent extends Vue {
 
 还是停用 prettier-now 了, 仅使用 prettier, 继续使用 tsx 格式的文件
 
-### jsx 里使用 el-form(2018-10-26)
+### jsx 里使用 el-form(2018-10-23)
 
 ```
 // 在.vue里的template里这样写
@@ -131,3 +131,5 @@ class MyForm extends Vue {
 ```
 调用api的操作是异步的, 提交到服务端的数据(this.form)是个引用变量, 如果提交操作后紧接着清空表单值, 那么提交到服务端的数据也是清过空表单值;
 #### 提交数据的时候浅拷贝一下
+
+##### Crow升不了级, 薄得跟纸一样, 摸一下就跪, 好吧,我手残!!!
