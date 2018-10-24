@@ -9,9 +9,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@tinymce/tinymce-vue": "^1.1.0",
     "@types/lodash": "^4.14.117",
-    "@types/tinymce": "^4.5.16",
     "D": "^1.0.0",
     "axios": "^0.18.0",
     "babel-plugin-jsx-v-model": "^2.0.3",

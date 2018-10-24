@@ -8,13 +8,8 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    user: {
-      namespaced: true,
-      ...require('./views/Start/store/state').default,
-    },
-    books: {
-      namespaced: true,
-      ...require('./views/Editor/store/books').default,
-    },
+    user: require('./views/Start/store/state').default,
+    books: require('./views/Editor/store/books').default,
+    posts: require('./views/Editor/store/posts').default,
   },
 });

@@ -1,6 +1,6 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import _ from 'lodash';
-import ItemBtnGroup, { Item } from './ItemBtnGroup';
+import ItemBtnGroup, { Item } from './Components/ItemBtnGroup';
 import './books.less';
 
 export interface Book {
@@ -20,9 +20,8 @@ interface FormData {
   components: { ItemBtnGroup },
 })
 export default class Books extends Vue {
-  private showBookEditor: boolean = false;
-  private editor: FormData = { name: null };
-  private rules = {
+  editor: FormData = { name: null };
+  rules = {
     name: [
       { required: true, message: '请输入文集名称', trigger: 'blur' },
       {
@@ -33,7 +32,7 @@ export default class Books extends Vue {
       },
     ],
   };
-  public $refs!: {
+  $refs!: {
     bookEditor: HTMLFormElement;
   };
   private data: Book[] = [];
@@ -57,11 +56,10 @@ export default class Books extends Vue {
   @Watch('$store.state.books.books')
   private storeChange(val: Book[], old: Book[]) {
     this.data = val;
-    if (val.length > 0 && !this.activeBook) {
+    if (val.length > 0 && (!this.activeBook || !_.some(val, ({ id }) => id === this.activeBook))) {
       this.changeBook(val[0].id);
-    }
-    if (!_.some(val, ({ id }) => id === this.activeBook)) {
-      this.changeBook(val[0].id);
+    } else if (val.length < 1) {
+      this.changeBook('');
     }
   }
   private renderItems(data: Book[]) {
@@ -75,7 +73,7 @@ export default class Books extends Vue {
           >
             {d.name}
             <div class="itemBtnGroup">
-              <item-btn-group items={this.items} id={d.id} name={d.name} />
+              <item-btn-group items={this.items} record={d} />
             </div>
           </li>
         );
@@ -86,14 +84,17 @@ export default class Books extends Vue {
   mounted() {
     this.$store.dispatch('books/getBooks');
   }
-  showDialog(e: MouseEvent, name = '') {
+  showDialog(e: MouseEvent, name: string = '') {
     e.preventDefault();
     this.editor.name = name;
   }
   hideAddBook() {
     this.editor.name = null;
     this.editor.id = null;
-    this.$refs.bookEditor.clearValidate();
+    const timer = setTimeout(() => {
+      this.$refs.bookEditor.clearValidate();
+      clearTimeout(timer);
+    }, 0);
   }
   addBook() {
     this.$refs.bookEditor.validate((valid: boolean) => {
@@ -111,13 +112,13 @@ export default class Books extends Vue {
       }
     });
   }
-  clearBook(id: string) {
-    this.$store.dispatch('books/clearBook', id);
+  clearBook(data: any) {
+    this.$store.dispatch('books/clearBook', data.id);
     return true;
   }
-  editBook(id: string, name: string, e: MouseEvent) {
-    this.showDialog(e, name);
-    this.editor.id = id;
+  editBook(data: any, e: MouseEvent) {
+    this.showDialog(e, data.name);
+    this.editor.id = data.id;
     return true;
   }
   submit(e: Event) {

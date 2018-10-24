@@ -1,14 +1,13 @@
 import { Vue, Component } from 'vue-property-decorator';
 import Books from './Books';
-import Test from './Test';
+import Posts from './Posts';
+import PostEditor from './PostEditor';
 import './styles.less';
 
 @Component({
-  components: { Books },
+  components: { Books, Posts, PostEditor },
 })
-export default class Editor extends Vue {
-  private notebooks = [];
-  private articles = [];
+export default class ArticleManage extends Vue {
   render() {
     return (
       <el-container class="editorWrap">
@@ -16,16 +15,18 @@ export default class Editor extends Vue {
           <el-row>
             <el-col span={12} class="editorList">
               <div class="books">
-                <Books />
+                <books />
               </div>
             </el-col>
             <el-col span={12} class="editorList">
-              <div>list2</div>
+              <div>
+                <posts />
+              </div>
             </el-col>
           </el-row>
         </el-aside>
         <el-main class="editor">
-          <router-link to="/main">/main/home</router-link>
+          <PostEditor />
         </el-main>
       </el-container>
     );

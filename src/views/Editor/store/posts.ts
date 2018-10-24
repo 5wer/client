@@ -16,8 +16,7 @@ export default {
   namespaced: true,
   strict: process.env.NODE_ENV !== 'production',
   state: {
-    books: [],
-    booksRemoved: [],
+    data: [],
   },
   mutations: {
     setBooks(state: FuckType, books: object[]) {

@@ -1,5 +1,6 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
+import './index.less';
 
 /**
  * @param name 按钮的名称
@@ -7,7 +8,7 @@ import _ from 'lodash';
  */
 export interface Item {
   name: string;
-  click?: (id: string, name: string, e: MouseEvent) => void | boolean;
+  click?: (record: any, e: MouseEvent) => void | boolean;
   disabled?: boolean;
   children?: Item[];
 }
@@ -41,14 +42,14 @@ class ItemDom extends Vue {
 })
 export default class ItemBtnGroup extends Vue {
   @Prop()
-  items!: Item[];
+  private items!: Item[];
   @Prop()
-  id?: string;
-  @Prop()
-  name?: string;
+  private record!: object;
   private show: boolean = false;
   private point: number[] | null = null;
   private trigger(c: number, e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
     if (!this.point) {
       this.open([e.clientX, e.clientY]);
     } else {
@@ -67,7 +68,7 @@ export default class ItemBtnGroup extends Vue {
     e.preventDefault();
     e.stopPropagation();
     if (fn) {
-      const shut = fn(this.id, this.name, e);
+      const shut = fn(this.record, e);
       if (shut) {
         this.shutDown();
       }

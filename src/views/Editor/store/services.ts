@@ -1,19 +1,18 @@
 import { post, get, del, put } from '../../../utils/requestRemote';
 
-interface Book {
-  [key: string]: any;
-}
-
+/**
+ * 文集api
+ */
 export function books() {
   return get('v1/books');
 }
 export function booksRemoved() {
   return get('v1/books-removed');
 }
-export function createBook(data: Book) {
+export function createBook(data: object) {
   return post('v1/book', data);
 }
-export function updateBook(data: Book) {
+export function updateBook(data: object) {
   return put('v1/book', data);
 }
 export function clearBook(id: string) {
@@ -25,3 +24,7 @@ export function restoreBook(id: string) {
 export function removeBook(id: string) {
   return put(`v1/book-remove/${id}`);
 }
+
+/**
+ * 文章api
+ */
