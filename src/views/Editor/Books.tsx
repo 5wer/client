@@ -40,39 +40,11 @@ export default class Books extends Vue {
   items: Item[] = [
     {
       name: '修改',
-      click: (id, name, e) => {
-        this.showDialog(e, name);
-        this.editor.id = id;
-        return true;
-      },
+      click: this.editBook,
     },
     {
       name: '删除',
       click: this.clearBook,
-    },
-    {
-      name: '其他',
-      disabled: true,
-      children: [
-        {
-          name: 'hello',
-          children: [
-            {
-              name: 'the 3dr',
-            },
-            {
-              name: '9999999',
-            },
-          ],
-        },
-        {
-          name: 'world',
-          click: (id) => {
-            console.log('world');
-            return true;
-          },
-        },
-      ],
     },
   ];
   private activeBook: string = '';
@@ -119,9 +91,9 @@ export default class Books extends Vue {
     this.editor.name = name;
   }
   hideAddBook() {
-    this.$refs.bookEditor.resetFields();
     this.editor.name = null;
     this.editor.id = null;
+    this.$refs.bookEditor.clearValidate();
   }
   addBook() {
     this.$refs.bookEditor.validate((valid: boolean) => {
@@ -141,6 +113,11 @@ export default class Books extends Vue {
   }
   clearBook(id: string) {
     this.$store.dispatch('books/clearBook', id);
+    return true;
+  }
+  editBook(id: string, name: string, e: MouseEvent) {
+    this.showDialog(e, name);
+    this.editor.id = id;
     return true;
   }
   submit(e: Event) {
