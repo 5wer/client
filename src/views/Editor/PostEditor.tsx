@@ -8,7 +8,7 @@ export default class PostEditor extends Vue {
   check() {
     const selection = window.getSelection();
     const range = selection.toString() && selection.getRangeAt(0);
-    console.log(selection,  range);
+    console.log(selection, range);
   }
   render() {
     return (
@@ -18,7 +18,11 @@ export default class PostEditor extends Vue {
         id="richtext"
       >
         <el-input />
-        <el-button onClick={this.check}>check</el-button>
+        <el-button-group style={{ margin: '10px auto' }}>
+          <el-button onClick={this.check} icon="el-icon-edit" />
+          <el-button icon="el-icon-save" />
+          <el-button icon="el-icon-delete" />
+        </el-button-group>
         <div
           style={{ flex: 1, padding: '10px', overflow: 'auto' }}
           contenteditable

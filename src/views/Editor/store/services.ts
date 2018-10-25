@@ -28,3 +28,30 @@ export function removeBook(id: string) {
 /**
  * 文章api
  */
+export function posts(bookId?: string) {
+  if (bookId) {
+    return get(`v1/posts/${bookId}`);
+  }
+  return get('v1/posts');
+}
+export function getPost(postId?: string) {
+  return get(`v1/post/${postId}`);
+}
+export function postsRemoved() {
+  return get('v1/posts-removed');
+}
+export function createPost(data: object) {
+  return post('v1/post', data);
+}
+export function updatePost(data: object) {
+  return put('v1/post', data);
+}
+export function clearPost(id: string) {
+  return del(`v1/post/${id}`);
+}
+export function restorePost(id: string) {
+  return put(`v1/post-restore/${id}`);
+}
+export function removePost(id: string) {
+  return put(`v1/post-remove/${id}`);
+}

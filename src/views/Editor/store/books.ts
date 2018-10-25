@@ -16,12 +16,16 @@ export default {
   namespaced: true,
   strict: process.env.NODE_ENV !== 'production',
   state: {
+    active: '',
     books: [],
     booksRemoved: [],
   },
   mutations: {
     setBooks(state: FuckType, books: object[]) {
       state.books = books;
+    },
+    setActive(state: FuckType, id: string) {
+      state.active = id;
     },
     updateBooks(state: FuckType, bookId: string) {
       const newBooks = _.filter(state.books, ({ id }) => id !== bookId);

@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import {
-  books,
+  posts,
+  getPost,
   booksRemoved,
   updateBook,
   removeBook,
   restoreBook,
   clearBook,
-  createBook,
+  createPost,
 } from './services';
 
 interface FuckType {
@@ -17,29 +18,44 @@ export default {
   strict: process.env.NODE_ENV !== 'production',
   state: {
     data: [],
+    active: '',
+    current: {},
   },
   mutations: {
-    setBooks(state: FuckType, books: object[]) {
-      state.books = books;
+    setPosts(state: FuckType, posts: object[]) {
+      state.data = posts;
     },
-    updateBooks(state: FuckType, bookId: string) {
-      const newBooks = _.filter(state.books, ({ id }) => id !== bookId);
-      state.books = [...newBooks];
+    setCurrent(state: FuckType, post: FuckType) {
+      state.current = post;
+    },
+    setActive(state: FuckType, id: string) {
+      state.active = id;
+    },
+    updateBooks(state: FuckType, postId: string) {
+      const newBooks = _.filter(state.data, ({ id }) => id !== postId);
+      state.data = [...newBooks];
     },
   },
   actions: {
-    async getBooks({ commit }: FuckType) {
-      const res = await books();
+    async getPosts({ commit }: FuckType, bookId: string) {
+      const res = await posts(bookId);
       if (res) {
         const data = res.data;
-        await commit('setBooks', data);
+        await commit('setPosts', data);
       }
     },
-    async createBook({ dispatch }: FuckType, data: object) {
-      const res = await createBook(data);
+    async getPost({ commit }: FuckType, postId: string) {
+      const res = await getPost(postId);
       if (res) {
         const data = res.data;
-        await dispatch('getBooks');
+        await commit('setCurrent', data);
+      }
+    },
+    async createPost({ dispatch, ...other }: FuckType, data: object) {
+      const res = await createPost(data);
+      if (res) {
+        const data = res.data;
+        await dispatch('getPosts', data.bookId);
       }
     },
     async updateBook({ dispatch }: FuckType, data: object) {

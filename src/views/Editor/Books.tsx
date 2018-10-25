@@ -50,8 +50,8 @@ export default class Books extends Vue {
 
   private changeBook(id: string, e?: MouseEvent): void {
     e && e.stopPropagation();
-    this.activeBook = id;
-    // todo: fetch posts with the new bookId
+    this.$store.commit('books/setActive', id);
+    this.$store.dispatch('posts/getPosts', id);
   }
   @Watch('$store.state.books.books')
   private storeChange(val: Book[], old: Book[]) {
@@ -61,6 +61,10 @@ export default class Books extends Vue {
     } else if (val.length < 1) {
       this.changeBook('');
     }
+  }
+  @Watch('$store.state.books.active')
+  private activeChange(val: string) {
+    this.activeBook = val;
   }
   private renderItems(data: Book[]) {
     if (data.length > 0) {
