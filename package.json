@@ -9,12 +9,15 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^1.1.0",
     "@types/lodash": "^4.14.117",
+    "@types/tinymce": "^4.5.16",
     "D": "^1.0.0",
     "axios": "^0.18.0",
     "babel-plugin-jsx-v-model": "^2.0.3",
     "element-ui": "^2.4.5",
     "moment": "^2.22.2",
+    "tinymce": "^4.8.4",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
