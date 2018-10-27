@@ -1,7 +1,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import Books from './Books';
 import Posts from './Posts';
-import PostEditor from './PostEditor';
+import PostEditor from './Editor';
 import './styles.less';
 
 @Component({

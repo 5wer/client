@@ -8,7 +8,7 @@ import { Route } from 'vue-router';
 export default class Home extends Vue {
   render() {
     return (
-      <div class="about">
+      <div class="about ">
         <h1>Home</h1>
         <router-view name="slider" />
         <router-view name="tweet" />
@@ -21,6 +21,6 @@ export default class Home extends Vue {
 
 <style lang="less" scoped>
 h1 {
-  background-color: #ff0
+  background-color: #ff0;
 }
 </style>
