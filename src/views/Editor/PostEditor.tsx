@@ -104,8 +104,10 @@ export default class PostEditor extends Vue {
     return (
       <el-container>
         <el-header>Header</el-header>
-        <el-main id="tinymce-wrap">
-          <editor id="tinymce" v-model={this.tinymceHtml} init={this.init()} />
+        <el-main id="editor-wrap">
+          <div id="tinymce-wrap">
+            <editor id="tinymce" v-model={this.tinymceHtml} init={this.init()} />
+          </div>
           <div id="artcle-attrabutes">
             <el-button
               onClick={this.triggerArticleAttrabutes}
