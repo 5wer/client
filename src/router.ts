@@ -43,7 +43,7 @@ export default new Router({
     {
       path: '/editor',
       name: 'editor',
-      component: () => import('./views/Editor/Index'),
+      component: () => import('./views/Editor'),
     },
   ],
 });

@@ -11,14 +11,28 @@ export default class Tags extends Vue {
   })
   data?: string[];
   @Prop()
-  removeTag!: (index: number, e: MouseEvent) => void;
+  removeTag!: (index: number) => void;
   @Prop()
-  addTag!: (e: KeyboardEvent) => void;
-  tagInputVisible: boolean = false;
-  hideInput() {
+  addTag!: (value: string) => void;
+  private tagInputVisible: boolean = false;
+  private beforeAddTag(e: KeyboardEvent) {
+    e.preventDefault();
+    if (e.code === 'Enter') {
+      const value: string = _.trim((e.target as HTMLInputElement).value) || '';
+      if (value !== null) {
+        this.addTag(value);
+        this.hideInput();
+      }
+    }
+  }
+  private beforeRemoveTag(index: number, e: MouseEvent) {
+    e.preventDefault();
+    this.removeTag(index);
+  }
+  private hideInput() {
     this.tagInputVisible = false;
   }
-  showInput() {
+  private showInput() {
     this.tagInputVisible = true;
     const daley = setTimeout(() => {
       this.$refs.saveTagInput.$refs.input.focus();
@@ -29,7 +43,7 @@ export default class Tags extends Vue {
     return (
       <div>
         {_.map(this.data, (tag, i) => (
-          <el-tag closable onClose={this.removeTag.bind(null, i)} key={i}>
+          <el-tag closable onClose={this.beforeRemoveTag.bind(null, i)} key={i}>
             {tag}
           </el-tag>
         ))}
@@ -38,10 +52,10 @@ export default class Tags extends Vue {
             class="input-new-tag"
             ref="saveTagInput"
             size="small"
-            nativeOn-keyup={this.addTag}
+            nativeOn-keyup={this.beforeAddTag}
             onBlur={this.hideInput}
             placeholder="按Enter键提交"
-            style={{ width: '5rem' }}
+            style={{ width: '6rem' }}
           />
         ) : (
           <el-button class="button-new-tag" size="small" onClick={this.showInput}>

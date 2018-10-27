@@ -68,7 +68,6 @@ interface Attrabutes {
 export default class PostEditor extends Vue {
   tinymceHtml: string = '请输入内容';
   private showArticleAttrabutes: boolean = false;
-  private tagInputVisible: boolean = false;
   private articleAttrabuts: Attrabutes = {
     summary: 'hello',
     colors: [],
@@ -102,19 +101,10 @@ export default class PostEditor extends Vue {
   triggerArticleAttrabutes() {
     this.showArticleAttrabutes = !this.showArticleAttrabutes;
   }
-  addTag(e: KeyboardEvent) {
-    e.preventDefault();
-    if (e.code === 'Enter') {
-      const value: string = _.trim((e.target as HTMLInputElement).value) || '';
-      if (value !== null) {
-        this.articleAttrabuts.tags.push(value);
-        this.tagInputVisible = false;
-      }
-    }
+  addTag(value: string) {
+    this.articleAttrabuts.tags.push(value);
   }
-  removeTag(index: number, e: MouseEvent) {
-    e.preventDefault();
-    console.log(index);
+  removeTag(index: number) {
     this.articleAttrabuts.tags.splice(index, 1);
   }
   submit(e: KeyboardEvent) {
