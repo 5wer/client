@@ -48,6 +48,7 @@ export interface Attrabutes {
   summary: string;
   colors: string[];
   tags: string[];
+  title: string;
 }
 
 @Component({
@@ -57,16 +58,34 @@ export default class AttrabutesBox extends Vue {
   @Prop()
   model!: Attrabutes;
   @Prop()
-  submit!: () => void;
+  submit!: (v: Attrabutes) => void;
   @Prop()
   addTag!: () => void;
   @Prop()
   removeTag!: () => void;
 
+  $refs!: {
+    form: HTMLFormElement;
+  };
+  save(e: MouseEvent) {
+    e.preventDefault();
+    this.$refs.form.validate((valid: boolean) => {
+      if (valid) {
+        this.submit(this.model);
+      }
+    });
+  }
   render() {
-    console.log('Attrabutes');
     return (
-      <el-form model={this.model} nativeOn-submit={this.submit} label-position="top">
+      <el-form
+        model={this.model}
+        nativeOn-submit={(e: Event) => e.preventDefault()}
+        label-position="top"
+        ref="form"
+      >
+        <el-button type="primary" onClick={this.save}>
+          save
+        </el-button>
         <el-form-item label="摘要" prop="summary">
           <el-input type="textarea" v-model={this.model.summary} row="3" />
         </el-form-item>

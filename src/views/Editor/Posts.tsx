@@ -83,7 +83,7 @@ export default class Posts extends Vue {
         return (
           <li
             key={d.id}
-            class={this.activeArticle === d.id ? 'active' : ''}
+            class={[this.activeArticle === d.id ? 'active' : '', 'article']}
             onClick={this.changeArticle.bind(null, d.id)}
           >
             {d.title}

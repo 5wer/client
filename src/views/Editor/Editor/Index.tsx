@@ -13,11 +13,12 @@ import 'tinymce/plugins/colorpicker';
 import 'tinymce/plugins/textcolor';
 import Editor from '@tinymce/tinymce-vue';
 import Tags from './Tags';
+import ArticleTitle from './Title';
 import AttrabutesBox, { Attrabutes } from './Attrabutes';
 import './editorFix.less';
 
 @Component({
-  components: { Editor, Tags, AttrabutesBox },
+  components: { Editor, Tags, AttrabutesBox, ArticleTitle },
 })
 export default class PostEditor extends Vue {
   tinymceHtml: string = '请输入内容';
@@ -26,6 +27,7 @@ export default class PostEditor extends Vue {
     summary: 'hello',
     colors: [],
     tags: [],
+    title: '',
   };
   $refs!: {
     saveTagInput: HTMLFormElement;
@@ -61,13 +63,18 @@ export default class PostEditor extends Vue {
   removeTag(index: number) {
     this.articleAttrabuts.tags.splice(index, 1);
   }
-  submit(e: KeyboardEvent) {
-    e.preventDefault();
+  submit(value: Attrabutes) {
+    console.log({ ...value, cont: this.tinymceHtml });
+  }
+  updateTitle(value: string) {
+    this.articleAttrabuts.title = value;
   }
   render() {
     return (
       <el-container>
-        <el-header>Header</el-header>
+        <el-header id="title-editor">
+          <article-title change={this.updateTitle} />
+        </el-header>
         <el-main id="editor-wrap">
           <div id="tinymce-wrap">
             <editor id="tinymce" v-model={this.tinymceHtml} init={this.init()} />

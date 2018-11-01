@@ -2,7 +2,7 @@
   <div class="right">
     <div class="add">
       <el-button
-        @click="editor()"
+        @click="goEdit()"
         icon="el-icon-plus"
         size="small"
         type="primary"
@@ -29,7 +29,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { router } from '../../../utils/requestRemote';
 
-@Component({})
+@Component
 export default class UserTitle extends Vue {
   public data = this.$store.state.user.user;
   private get avatar() {
@@ -38,7 +38,7 @@ export default class UserTitle extends Vue {
   private get username() {
     return this.data.username;
   }
-  private editor() {
+  private goEdit() {
     router.push('/editor');
   }
   @Watch('$store.state.user.user')
