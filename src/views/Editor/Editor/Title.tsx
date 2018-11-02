@@ -5,6 +5,8 @@ let timer: number = 0;
 @Component
 export default class ArticleTitle extends Vue {
   @Prop()
+  value!: string;
+  @Prop()
   change!: (value: string) => void;
   onChange(value: string) {
     if (timer !== 0) {
@@ -15,7 +17,10 @@ export default class ArticleTitle extends Vue {
     }, 500);
   }
   render() {
-    return (<el-input onInput={this.onChange} placeholder="请输入文章的题目">
-    <template slot="prepend">标题</template></el-input>);
+    return (
+      <el-input value={this.value} onInput={this.onChange} placeholder="请输入文章的题目">
+        <template slot="prepend">标题</template>
+      </el-input>
+    );
   }
 }

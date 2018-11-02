@@ -1,4 +1,4 @@
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
 import Books from './Books';
 import Posts from './Posts';
 import PostEditor from './Editor';
@@ -8,6 +8,15 @@ import './styles.less';
   components: { Books, Posts, PostEditor },
 })
 export default class ArticleManage extends Vue {
+  private show: boolean = false;
+  @Watch('$store.state.posts.active')
+  private changeState(val: string) {
+    if (val) {
+      this.show = true;
+    } else {
+      this.show = false;
+    }
+  }
   render() {
     return (
       <el-container class="editorWrap">
@@ -26,6 +35,7 @@ export default class ArticleManage extends Vue {
           </el-row>
         </el-aside>
         <el-main class="editor">
+          {this.show ? null : <div id="disibled">暂时没有可编辑文章</div>}
           <PostEditor />
         </el-main>
       </el-container>

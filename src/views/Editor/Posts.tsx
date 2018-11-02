@@ -10,7 +10,6 @@ export interface PostItem {
   bookId?: string;
   status?: number;
   isPublish?: number;
-  length?: number;
   summary?: string;
 }
 export interface Post extends PostItem {
@@ -19,6 +18,9 @@ export interface Post extends PostItem {
   createTime?: string;
   lastModifyTime?: string;
   authoerId: string;
+  type?: string;
+  tags?: string;
+  color?: string;
 }
 interface FormData {
   [key: string]: number | string | null;
@@ -37,31 +39,17 @@ export default class Posts extends Vue {
         title: moment().format('YYYY-MM-DD HH:mm:ss'),
       });
     } else {
-      throw new Error('bookId不存在,请先创建文集');
+      throw new Error('文集不存在, 请先创建文集');
     }
-  }
-  private fetchTimer: number | null = null;
-  private clearTimer() {
-    if (this.fetchTimer) {
-      clearTimeout(this.fetchTimer);
-      this.fetchTimer = null;
-    }
-  }
-  private getPost(id: string) {
-    this.$store.dispatch('posts/getPost', id);
   }
   @Watch('$store.state.posts.active')
   private activeChange(val: string) {
     this.activeArticle = val;
-    this.clearTimer();
-    this.fetchTimer = setTimeout(() => {
-      this.getPost(val);
-      this.clearTimer();
-    }, 500);
   }
+
   private changeArticle(id: string, e?: MouseEvent): void {
     e && e.stopPropagation();
-    this.$store.commit('posts/setActive', id);
+    this.$store.dispatch('posts/getPost', id);
   }
   private items: Item[] = [];
   private data: Post[] = [];
@@ -69,11 +57,15 @@ export default class Posts extends Vue {
   @Watch('$store.state.posts.data')
   private storeChange(val: Post[], old: Post[]) {
     this.data = val;
-    if (val.length > 0 && !this.activeArticle) {
-      this.changeArticle(val[0].id);
-    }
-    if (!_.some(val, ({ id }) => id === this.activeArticle)) {
-      this.changeArticle(val[0].id);
+    if (val.length > 0) {
+      if (!this.activeArticle) {
+        this.changeArticle(val[0].id);
+      }
+      if (!_.some(val, ({ id }) => id === this.activeArticle)) {
+        this.changeArticle(val[0].id);
+      }
+    } else {
+      this.$store.commit('posts/setActive', false);
     }
   }
 
@@ -104,7 +96,7 @@ export default class Posts extends Vue {
             icon="el-icon-circle-plus"
             onClick={this.newArticle}
             type="danger"
-            size="mini"
+            size="small"
             class="addBookBtn"
           >
             新增文章

@@ -3,7 +3,7 @@ import {
   posts,
   getPost,
   booksRemoved,
-  updateBook,
+  updatePost,
   removeBook,
   restoreBook,
   clearBook,
@@ -20,16 +20,23 @@ export default {
     data: [],
     active: '',
     current: {},
+    orderType: 1,
   },
   mutations: {
     setPosts(state: FuckType, posts: object[]) {
-      state.data = posts;
+      state.data = _.reverse(_.sortBy(posts, ['createTime']));
+    },
+    addPost(state: FuckType, post: object) {
+      state.data.unshift(post);
     },
     setCurrent(state: FuckType, post: FuckType) {
       state.current = post;
     },
     setActive(state: FuckType, id: string) {
       state.active = id;
+      if (!id) {
+        state.current = {};
+      }
     },
     updateBooks(state: FuckType, postId: string) {
       const newBooks = _.filter(state.data, ({ id }) => id !== postId);
@@ -42,27 +49,31 @@ export default {
       if (res) {
         const data = res.data;
         await commit('setPosts', data);
+      } else {
+        await commit('setPosts', []);
       }
     },
-    async getPost({ commit }: FuckType, postId: string) {
-      const res = await getPost(postId);
+    async getPost({ commit }: FuckType, id: string) {
+      const res = await getPost(id);
       if (res) {
         const data = res.data;
         await commit('setCurrent', data);
+        await commit('setActive', data.id);
       }
     },
-    async createPost({ dispatch, ...other }: FuckType, data: object) {
+    async createPost({ dispatch, commit }: FuckType, data: object) {
       const res = await createPost(data);
       if (res) {
         const data = res.data;
-        await dispatch('getPosts', data.bookId);
+        commit('addPost', data); // 在state里添加新增的数据
+        commit('setCurrent', data); // 将新增数据回填入表单
+        commit('setActive', data.id); // 设置新的文章选中项
       }
     },
-    async updateBook({ dispatch }: FuckType, data: object) {
-      const res = await updateBook(data);
+    async updatePost({ dispatch }: FuckType, data: object) {
+      const res = await updatePost(data);
       if (res) {
         const data = res.data;
-        await dispatch('getBooks');
       }
     },
     async clearBook({ commit }: FuckType, id: string) {

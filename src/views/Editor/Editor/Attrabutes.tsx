@@ -45,10 +45,11 @@ const COLORS = [
   },
 ];
 export interface Attrabutes {
-  summary: string;
-  colors: string[];
+  summary?: string;
+  color: any[];
   tags: string[];
   title: string;
+  type?: string;
 }
 
 @Component({
@@ -89,8 +90,12 @@ export default class AttrabutesBox extends Vue {
         <el-form-item label="摘要" prop="summary">
           <el-input type="textarea" v-model={this.model.summary} row="3" />
         </el-form-item>
+        <el-form-item label="类型" prop="type">
+        {/* todo 换成el-select */}
+          <el-input v-model={this.model.type} />
+        </el-form-item>
         <el-form-item label="色调" prop="colors">
-          <el-checkbox-group v-model={this.model.colors} min={0} max={3}>
+          <el-checkbox-group v-model={this.model.color} min={0} max={3}>
             {_.map(COLORS, (color, i) => (
               <el-checkbox label={color.label} key={color.key}>
                 {color.label}

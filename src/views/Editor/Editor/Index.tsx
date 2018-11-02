@@ -1,4 +1,4 @@
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
 import _ from 'lodash';
 import tinymce from 'tinymce';
 import 'tinymce/themes/modern/theme';
@@ -15,7 +15,15 @@ import Editor from '@tinymce/tinymce-vue';
 import Tags from './Tags';
 import ArticleTitle from './Title';
 import AttrabutesBox, { Attrabutes } from './Attrabutes';
+import { Post } from '../Posts';
 import './editorFix.less';
+
+function splitStr(str: string | undefined, separator: string): any[] {
+  if (str) {
+    return str.split(separator);
+  }
+  return [];
+}
 
 @Component({
   components: { Editor, Tags, AttrabutesBox, ArticleTitle },
@@ -24,11 +32,24 @@ export default class PostEditor extends Vue {
   tinymceHtml: string = '请输入内容';
   private showArticleAttrabutes: boolean = false;
   private articleAttrabuts: Attrabutes = {
-    summary: 'hello',
-    colors: [],
+    summary: '',
+    color: [],
     tags: [],
     title: '',
+    type: '',
   };
+  @Watch('$store.state.posts.current')
+  private activeChange(val: Post) {
+    const { summary, color, tags, title, type, content } = val;
+    this.articleAttrabuts = {
+      summary,
+      type,
+      color: splitStr(color, ','),
+      tags: splitStr(tags, ','),
+      title: title || '',
+    };
+    this.tinymceHtml = content;
+  }
   $refs!: {
     saveTagInput: HTMLFormElement;
   };
@@ -64,7 +85,19 @@ export default class PostEditor extends Vue {
     this.articleAttrabuts.tags.splice(index, 1);
   }
   submit(value: Attrabutes) {
-    console.log({ ...value, cont: this.tinymceHtml });
+    const res = { ...this.$store.state.posts.current, ...value, content: this.tinymceHtml };
+    if (res.tags.length > 0) {
+      res.tags = res.tags.join(',');
+    } else {
+      delete res.tags;
+    }
+    if (res.color.length > 0) {
+      res.color = res.color.join(',');
+    } else {
+      delete res.color;
+    }
+    console.log(res);
+    this.$store.dispatch('posts/updatePost', res);
   }
   updateTitle(value: string) {
     this.articleAttrabuts.title = value;
@@ -73,7 +106,7 @@ export default class PostEditor extends Vue {
     return (
       <el-container>
         <el-header id="title-editor">
-          <article-title change={this.updateTitle} />
+          <article-title value={this.articleAttrabuts.title} change={this.updateTitle} />
         </el-header>
         <el-main id="editor-wrap">
           <div id="tinymce-wrap">
