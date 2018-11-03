@@ -25,7 +25,7 @@ export default new Router({
         {
           path: 'home',
           name: 'home',
-          component: () => import('./views/Home/Index.vue'),
+          component: () => import('./views/Home/index.vue'),
           children: [
             {
               path: '',

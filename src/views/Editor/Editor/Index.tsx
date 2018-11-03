@@ -89,14 +89,13 @@ export default class PostEditor extends Vue {
     if (res.tags.length > 0) {
       res.tags = res.tags.join(',');
     } else {
-      delete res.tags;
+      res.tags = '';
     }
     if (res.color.length > 0) {
       res.color = res.color.join(',');
     } else {
-      delete res.color;
+      res.color = '';
     }
-    console.log(res);
     this.$store.dispatch('posts/updatePost', res);
   }
   updateTitle(value: string) {
