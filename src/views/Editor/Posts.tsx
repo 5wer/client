@@ -51,7 +51,26 @@ export default class Posts extends Vue {
     e && e.stopPropagation();
     this.$store.dispatch('posts/getPost', id);
   }
-  private items: Item[] = [];
+  private showBooks() {
+
+  }
+  private removePost() {
+
+  }
+  private items: Item[] = [
+    {
+      name: '移动到...',
+      click: this.showBooks,
+    },
+    {
+      name: '删除',
+      click: this.removePost,
+    },
+    {
+      name: '发布',
+      click: this.removePost,
+    },
+  ];
   private data: Post[] = [];
 
   @Watch('$store.state.posts.data')
@@ -68,7 +87,6 @@ export default class Posts extends Vue {
       this.$store.commit('posts/setActive', false);
     }
   }
-
   private renderItems(data: Post[]) {
     if (data.length > 0) {
       return _.map(data, (d) => {
