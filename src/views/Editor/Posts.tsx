@@ -3,6 +3,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import ItemBtnGroup, { Item } from './Components/ItemBtnGroup';
 import './books.less';
+import { Book } from './Books';
 
 export interface PostItem {
   title: string;
@@ -31,6 +32,9 @@ interface FormData {
 })
 export default class Posts extends Vue {
   private activeArticle: string = '';
+  get books() {
+    return this.$store.state.books.books;
+  }
   private newArticle() {
     const bookId = this.$store.state.books.active;
     if (bookId) {
@@ -51,16 +55,23 @@ export default class Posts extends Vue {
     e && e.stopPropagation();
     this.$store.dispatch('posts/getPost', id);
   }
-  private showBooks() {
-
+  private showBooks(item: PostItem) {
+    console.log(item, this.books);
   }
-  private removePost() {
-
-  }
+  private removePost() {}
   private items: Item[] = [
     {
       name: '移动到...',
       click: this.showBooks,
+      children: (item: any) => {
+        const books = _.filter(this.books, (book: Book) => book.id !== item.bookId);
+        return _.map(books, (book: Book) => ({
+          name: book.name,
+          click: () => {
+            console.log('----', book.id);
+          },
+        }));
+      },
     },
     {
       name: '删除',
@@ -98,7 +109,7 @@ export default class Posts extends Vue {
           >
             {d.title}
             <div class="itemBtnGroup">
-              <item-btn-group items={this.items} />
+              <item-btn-group items={this.items} record={d} />
             </div>
           </li>
         );

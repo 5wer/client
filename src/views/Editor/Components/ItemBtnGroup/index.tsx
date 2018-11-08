@@ -10,7 +10,7 @@ export interface Item {
   name: string;
   click?: (record: any, e: MouseEvent) => void | boolean;
   disabled?: boolean;
-  children?: Item[];
+  children?: Item[] | Function;
 }
 @Component
 class ItemDom extends Vue {
@@ -85,6 +85,19 @@ export default class ItemBtnGroup extends Vue {
             disabled={item.disabled}
           >
             {this.renderItems(item.children)}
+          </item-dom>
+        );
+      }
+      if (_.isFunction(item.children)) {
+        const children = item.children(this.record);
+        return (
+          <item-dom
+            key={`options_${index}`}
+            name={item.name}
+            clickHandle={this.proxyClick.bind(null, item.click)}
+            disabled={item.disabled}
+          >
+            {this.renderItems(children)}
           </item-dom>
         );
       }
