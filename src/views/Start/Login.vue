@@ -26,7 +26,6 @@
         </div>
       </el-col>
     </el-row>
-    <router-link to="/registe">registe</router-link>
   </div>
 </template>
 
