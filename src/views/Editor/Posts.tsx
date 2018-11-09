@@ -113,6 +113,7 @@ export default class Posts extends Vue {
   }
   private renderItems(data: Post[]) {
     if (data.length > 0) {
+
       return _.map(data, (d) => {
         return (
           <li
@@ -120,7 +121,11 @@ export default class Posts extends Vue {
             class={[this.activeArticle === d.id ? 'active' : '', 'article']}
             onClick={this.changeArticle.bind(null, d.id)}
           >
-            {d.title}
+            <div class="title">{d.title}</div>
+            <div class="summary">{d.summary}</div>
+            <div class="lastModifyTime">
+              {moment(d.lastModifyTime).format('YYYY-MM-DD HH:mm:ss')}
+            </div>
             <div class="itemBtnGroup">
               <item-btn-group items={this.items} record={d} />
             </div>

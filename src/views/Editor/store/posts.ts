@@ -16,7 +16,7 @@ export default {
   },
   mutations: {
     setPosts(state: FuckType, posts: object[]) {
-      state.data = _.reverse(_.sortBy(posts, ['createTime']));
+      state.data = _.reverse(_.sortBy(posts, ['lastModifyTime']));
     },
     updatePostItem(state: FuckType, post: FuckType) {
       const index = _.findIndex(state.data, ['id', post.id]);
