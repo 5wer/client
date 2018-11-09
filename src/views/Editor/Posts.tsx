@@ -55,30 +55,42 @@ export default class Posts extends Vue {
     e && e.stopPropagation();
     this.$store.dispatch('posts/getPost', id);
   }
-  private showBooks(item: PostItem) {
-    console.log(item, this.books);
+  private removePost(item: PostItem, e: MouseEvent) {
+    e.preventDefault();
+    this.$store.dispatch('posts/removePost', item.id);
   }
-  private removePost() {}
+  private movePost(id: string, bookId: string) {
+    this.$store.dispatch('posts/movePost', { id, bookId });
+  }
+  private publicPost(item: PostItem, e: MouseEvent) {
+    this.$store.dispatch('posts/updatePost', {
+      data: {
+        id: item.id,
+        isPublish: item.isPublish === 1 ? 0 : 1,
+      },
+    });
+    return true;
+  }
   private items: Item[] = [
     {
+      name: (item: any) => (item.isPublish ? '下线' : '发布'),
+      click: this.publicPost,
+    },
+    {
       name: '移动到...',
-      click: this.showBooks,
       children: (item: any) => {
         const books = _.filter(this.books, (book: Book) => book.id !== item.bookId);
         return _.map(books, (book: Book) => ({
           name: book.name,
-          click: () => {
-            console.log('----', book.id);
+          click: (p: any, e: MouseEvent) => {
+            e.preventDefault();
+            this.movePost(item.id, book.id);
           },
         }));
       },
     },
     {
       name: '删除',
-      click: this.removePost,
-    },
-    {
-      name: '发布',
       click: this.removePost,
     },
   ];

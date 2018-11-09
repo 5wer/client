@@ -18,7 +18,12 @@ export default class ArticleTitle extends Vue {
   }
   render() {
     return (
-      <el-input value={this.value} onInput={this.onChange} placeholder="请输入文章的题目">
+      <el-input
+        value={this.value}
+        style={{ marginRight: '1rem' }}
+        onInput={this.onChange}
+        placeholder="请输入文章的题目"
+      >
         <template slot="prepend">标题</template>
       </el-input>
     );

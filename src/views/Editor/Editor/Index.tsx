@@ -29,7 +29,6 @@ function splitStr(str: string | undefined, separator: string): any[] {
   components: { Editor, Tags, AttrabutesBox, ArticleTitle },
 })
 export default class PostEditor extends Vue {
-  tinymceHtml: string = '请输入内容';
   private showArticleAttrabutes: boolean = false;
   private articleAttrabuts: Attrabutes = {
     summary: '',
@@ -37,6 +36,7 @@ export default class PostEditor extends Vue {
     tags: [],
     title: '',
     type: '',
+    content: '请输入内容',
   };
   @Watch('$store.state.posts.current')
   private activeChange(val: Post) {
@@ -47,8 +47,8 @@ export default class PostEditor extends Vue {
       color: splitStr(color, ','),
       tags: splitStr(tags, ','),
       title: title || '',
+      content: content || '',
     };
-    this.tinymceHtml = content;
   }
   $refs!: {
     saveTagInput: HTMLFormElement;
@@ -84,32 +84,48 @@ export default class PostEditor extends Vue {
   removeTag(index: number) {
     this.articleAttrabuts.tags.splice(index, 1);
   }
-  submit(value: Attrabutes) {
-    const res = { ...this.$store.state.posts.current, ...value, content: this.tinymceHtml };
-    if (res.tags.length > 0) {
-      res.tags = res.tags.join(',');
-    } else {
-      res.tags = '';
-    }
-    if (res.color.length > 0) {
-      res.color = res.color.join(',');
-    } else {
-      res.color = '';
-    }
-    this.$store.dispatch('posts/updatePost', res);
-  }
   updateTitle(value: string) {
     this.articleAttrabuts.title = value;
+  }
+  press(publish: boolean, e: MouseEvent) {
+    e.preventDefault();
+    const data = {
+      ...this.$store.state.posts.current,
+      ...this.articleAttrabuts,
+    };
+    if (publish) {
+      data.isPublish = 1;
+    }
+    if (data.tags.length > 0) {
+      data.tags = data.tags.join(',');
+    } else {
+      data.tags = '';
+    }
+    if (data.color.length > 0) {
+      data.color = data.color.join(',');
+    } else {
+      data.color = '';
+    }
+    this.$store.dispatch('posts/updatePost', { data, publish });
+  }
+  get isPublished() {
+    return this.$store.state.posts.current.isPublish;
   }
   render() {
     return (
       <el-container>
         <el-header id="title-editor">
           <article-title value={this.articleAttrabuts.title} change={this.updateTitle} />
+          {this.isPublished === 1 ? null : (
+            <el-button onClick={this.press.bind(this, false)}>保存</el-button>
+          )}
+          <el-button onClick={this.press.bind(this, true)} type="primary">
+            保存并发布
+          </el-button>
         </el-header>
         <el-main id="editor-wrap">
           <div id="tinymce-wrap">
-            <editor id="tinymce" v-model={this.tinymceHtml} init={this.init()} />
+            <editor id="tinymce" v-model={this.articleAttrabuts.content} init={this.init()} />
           </div>
           <div id="artcle-attrabutes">
             <el-button
@@ -125,7 +141,6 @@ export default class PostEditor extends Vue {
             <div id="form-wrap" v-show={this.showArticleAttrabutes}>
               <attrabutes-box
                 model={this.articleAttrabuts}
-                submit={this.submit}
                 removeTag={this.removeTag}
                 addTag={this.addTag}
               />

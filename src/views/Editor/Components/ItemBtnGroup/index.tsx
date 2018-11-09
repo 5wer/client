@@ -7,11 +7,12 @@ import './index.less';
  *
  */
 export interface Item {
-  name: string;
+  name: string | Function;
   click?: (record: any, e: MouseEvent) => void | boolean;
   disabled?: boolean;
   children?: Item[] | Function;
 }
+
 @Component
 class ItemDom extends Vue {
   @Prop()
@@ -76,11 +77,17 @@ export default class ItemBtnGroup extends Vue {
   }
   private renderItems(items: Item[]): any {
     return _.map(items, (item, index) => {
+      let name: string = '';
+      if (_.isString(item.name)) {
+        name = item.name;
+      } else if (_.isFunction(item.name)) {
+        name = item.name(this.record);
+      }
       if (_.isArray(item.children) && item.children.length > 0) {
         return (
           <item-dom
             key={`options_${index}`}
-            name={item.name}
+            name={name}
             clickHandle={this.proxyClick.bind(null, item.click)}
             disabled={item.disabled}
           >
@@ -93,7 +100,7 @@ export default class ItemBtnGroup extends Vue {
         return (
           <item-dom
             key={`options_${index}`}
-            name={item.name}
+            name={name}
             clickHandle={this.proxyClick.bind(null, item.click)}
             disabled={item.disabled}
           >
@@ -101,10 +108,11 @@ export default class ItemBtnGroup extends Vue {
           </item-dom>
         );
       }
+
       return (
         <item-dom
           key={`options_${index}`}
-          name={item.name}
+          name={name}
           clickHandle={this.proxyClick.bind(null, item.click)}
           disabled={item.disabled}
         />

@@ -1,15 +1,6 @@
 import _ from 'lodash';
 import { Message } from 'element-ui';
-import {
-  posts,
-  getPost,
-  booksRemoved,
-  updatePost,
-  removeBook,
-  restoreBook,
-  clearBook,
-  createPost,
-} from './services';
+import { posts, getPost, updatePost, clearPost, createPost } from './services';
 
 interface FuckType {
   [key: string]: any;
@@ -77,8 +68,8 @@ export default {
         commit('setActive', data.id); // 设置新的文章选中项
       }
     },
-    async updatePost({ commit, state }: FuckType, data: object) {
-      const res = await updatePost(data);
+    async updatePost({ commit, state }: FuckType, newData: FuckType) {
+      const res = await updatePost(newData.data);
       if (res) {
         const data = res.data;
         if (data) {
@@ -87,16 +78,31 @@ export default {
           commit('updatePostItem', { bookId, id, isPublish, lastModifyTime, summary, title, type });
           Message({
             type: 'success',
-            message: `保存文章 (${data.id}) 成功`,
+            message: `${newData.publish ? '发布' : '保存'}文章 (${data.id}) 成功`,
             center: true,
           });
         }
       }
     },
-    async clearBook({ commit }: FuckType, id: string) {
-      const res = await clearBook(id);
+    async movePost({ commit, state }: FuckType, data: object) {
+      const res = await updatePost(data);
       if (res) {
-        await commit('updateBooks', id);
+        const data = res.data;
+        if (data) {
+          commit('setPosts', _.filter(state.data, (post: FuckType) => post.id !== data.id));
+          if (state.current.id === data.id) {
+            commit('setCurrent', {});
+          }
+        }
+      }
+    },
+    async removePost({ commit, state }: FuckType, id: string) {
+      const { data } = await clearPost(id);
+      if (data) {
+        commit('setPosts', _.filter(state.data, (post: FuckType) => post.id !== data.id));
+        if (state.current.id === data.id) {
+          commit('setCurrent', {});
+        }
       }
     },
   },

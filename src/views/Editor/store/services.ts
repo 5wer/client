@@ -46,12 +46,12 @@ export function createPost(data: object) {
 export function updatePost(data: object) {
   return put('v1/post', data);
 }
-export function clearPost(id: string) {
-  return del(`v1/post/${id}`);
-}
 export function restorePost(id: string) {
   return put(`v1/post-restore/${id}`);
 }
-export function removePost(id: string) {
+export function removePost(id: string): { [key: string]: any } {
   return put(`v1/post-remove/${id}`);
+}
+export function clearPost(id: string): { [key: string]: any } {
+  return del(`v1/post/${id}`);
 }

@@ -50,6 +50,7 @@ export interface Attrabutes {
   tags: string[];
   title: string;
   type?: string;
+  content?: string;
 }
 
 @Component({
@@ -59,8 +60,6 @@ export default class AttrabutesBox extends Vue {
   @Prop()
   model!: Attrabutes;
   @Prop()
-  submit!: (v: Attrabutes) => void;
-  @Prop()
   addTag!: () => void;
   @Prop()
   removeTag!: () => void;
@@ -68,14 +67,6 @@ export default class AttrabutesBox extends Vue {
   $refs!: {
     form: HTMLFormElement;
   };
-  save(e: MouseEvent) {
-    e.preventDefault();
-    this.$refs.form.validate((valid: boolean) => {
-      if (valid) {
-        this.submit(this.model);
-      }
-    });
-  }
   render() {
     return (
       <el-form
@@ -84,9 +75,6 @@ export default class AttrabutesBox extends Vue {
         label-position="top"
         ref="form"
       >
-        <el-button type="primary" onClick={this.save}>
-          save
-        </el-button>
         <el-form-item label="摘要" prop="summary">
           <el-input type="textarea" v-model={this.model.summary} row="3" />
         </el-form-item>
