@@ -76,9 +76,21 @@ export default {
           commit('setCurrent', data);
           const { bookId, id, isPublish, lastModifyTime, summary, title, type } = data;
           commit('updatePostItem', { bookId, id, isPublish, lastModifyTime, summary, title, type });
+          const actionType = ((t) => {
+            switch (t) {
+              case 'save':
+                return '保存';
+              case 'publish':
+                return '发布';
+              case 'down':
+                return '下线';
+              default:
+                return '保存';
+            }
+          })(newData.type);
           Message({
             type: 'success',
-            message: `${newData.publish ? '发布' : '保存'}文章 (${data.id}) 成功`,
+            message: `${actionType}文章 (${data.id}) 成功`,
             center: true,
           });
         }
@@ -93,6 +105,11 @@ export default {
           if (state.current.id === data.id) {
             commit('setCurrent', {});
           }
+          Message({
+            type: 'success',
+            message: `移动文章 (${data.id}) 成功`,
+            center: true,
+          });
         }
       }
     },

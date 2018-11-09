@@ -68,6 +68,7 @@ export default class Posts extends Vue {
         id: item.id,
         isPublish: item.isPublish === 1 ? 0 : 1,
       },
+      type: item.isPublish === 1 ? 'down' : 'publish',
     });
     return true;
   }

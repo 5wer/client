@@ -87,13 +87,13 @@ export default class PostEditor extends Vue {
   updateTitle(value: string) {
     this.articleAttrabuts.title = value;
   }
-  press(publish: boolean, e: MouseEvent) {
+  press(type: string, e: MouseEvent) {
     e.preventDefault();
     const data = {
       ...this.$store.state.posts.current,
       ...this.articleAttrabuts,
     };
-    if (publish) {
+    if (type === 'publish') {
       data.isPublish = 1;
     }
     if (data.tags.length > 0) {
@@ -106,7 +106,7 @@ export default class PostEditor extends Vue {
     } else {
       data.color = '';
     }
-    this.$store.dispatch('posts/updatePost', { data, publish });
+    this.$store.dispatch('posts/updatePost', { data, type });
   }
   get isPublished() {
     return this.$store.state.posts.current.isPublish;
@@ -117,9 +117,9 @@ export default class PostEditor extends Vue {
         <el-header id="title-editor">
           <article-title value={this.articleAttrabuts.title} change={this.updateTitle} />
           {this.isPublished === 1 ? null : (
-            <el-button onClick={this.press.bind(this, false)}>保存</el-button>
+            <el-button onClick={this.press.bind(this, 'save')}>保存</el-button>
           )}
-          <el-button onClick={this.press.bind(this, true)} type="primary">
+          <el-button onClick={this.press.bind(this, 'publish')} type="primary">
             保存并发布
           </el-button>
         </el-header>
