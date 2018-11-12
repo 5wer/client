@@ -28,11 +28,18 @@ export default new Router({
           children: [
             {
               path: '',
-              components: {
-                slider: () => import('./views/Home/Slider'),
-                tweet: () => import('./views/Home/Tweet'),
-                list: () => import('./views/Home/List'),
-              },
+              name: 'slider',
+              component: () => import('./views/Home/Slider'),
+            },
+            {
+              path: '',
+              name: 'list',
+              component: () => import('./views/Home/List'),
+            },
+            {
+              path: '',
+              name: 'tweet',
+              component: () => import('./views/Home/Tweet'),
             },
           ],
         },
