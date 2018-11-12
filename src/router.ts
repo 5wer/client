@@ -9,37 +9,35 @@ export default new Router({
     {
       path: '/',
       name: 'login',
-      component: () => import('./views/Start/Login.vue'),
+      component: () => import('./views/Start/Login'),
     },
     {
       path: '/registe',
       name: 'registe',
-      component: () => import('./views/Start/Registe.vue'),
+      component: () => import('./views/Start/Registe'),
     },
     {
       path: '/main',
       redirect: '/main/home',
       name: 'main',
-      component: () => import('@/components/Layout/Layout.vue'),
+      component: () => import('@/components/Layout/Layout'),
       children: [
         {
           path: 'home',
-          name: 'home',
-          component: () => import('./views/Home/index.vue'),
+          component: () => import('./views/Home'),
           children: [
             {
               path: '',
               components: {
-                slider: () => import('./views/Home/Slider.vue'),
-                tweet: () => import('./views/Home/Tweet.vue'),
-                list: () => import('./views/Home/List.vue'),
+                slider: () => import('./views/Home/Slider'),
+                tweet: () => import('./views/Home/Tweet'),
+                list: () => import('./views/Home/List'),
               },
             },
           ],
         },
       ],
     },
-
     {
       path: '/editor',
       name: 'editor',

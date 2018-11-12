@@ -1,13 +1,5 @@
-<template>
-  <div class="__logo__" v-bind:style="{height, width, color: fontColor}">
-    <div class="name" v-bind:style="fontSize2">5wer</div>
-    <div class="wu" v-bind:style="fontSize1">五</div>
-    <div class="wer" v-bind:style="fontSize3">味儿</div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import './logo.less';
 
 @Component
 export default class LogoIcon extends Vue {
@@ -43,9 +35,22 @@ export default class LogoIcon extends Vue {
   get height(): string {
     return this.getFontSize(this.size, 0.5);
   }
+  render() {
+    return (
+      <div
+        class="__logo__"
+        style={{ height: this.height, width: this.width, color: this.fontColor }}
+      >
+        <div class="name" style={this.fontSize2}>
+          5wer
+        </div>
+        <div class="wu" style={this.fontSize1}>
+          五
+        </div>
+        <div class="wer" style={this.fontSize3}>
+          味儿
+        </div>
+      </div>
+    );
+  }
 }
-</script>
-
-<style lang="less" scoped>
-@import './logo.less';
-</style>
