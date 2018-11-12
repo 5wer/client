@@ -50,7 +50,11 @@ export default class Posts extends Vue {
   private activeChange(val: string) {
     this.activeArticle = val;
   }
-
+  mounted() {
+    if (!this.activeArticle) {
+      this.activeChange(this.$store.state.posts.active);
+    }
+  }
   private changeArticle(id: string, e?: MouseEvent): void {
     e && e.stopPropagation();
     this.$store.dispatch('posts/getPost', id);
@@ -113,7 +117,6 @@ export default class Posts extends Vue {
   }
   private renderItems(data: Post[]) {
     if (data.length > 0) {
-
       return _.map(data, (d) => {
         return (
           <li

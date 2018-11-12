@@ -1,6 +1,7 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import _ from 'lodash';
 import ItemBtnGroup, { Item } from './Components/ItemBtnGroup';
+import { router } from '../../utils/requestRemote';
 import './books.less';
 
 export interface Book {
@@ -54,7 +55,7 @@ export default class Books extends Vue {
     this.$store.dispatch('posts/getPosts', id);
   }
   @Watch('$store.state.books.books')
-  private storeChange(val: Book[], old: Book[]) {
+  private storeChange(val: Book[]) {
     this.data = val;
     if (val.length > 0 && (!this.activeBook || !_.some(val, ({ id }) => id === this.activeBook))) {
       this.changeBook(val[0].id);
@@ -66,6 +67,7 @@ export default class Books extends Vue {
   private activeChange(val: string) {
     this.activeBook = val;
   }
+
   private renderItems(data: Book[]) {
     if (data.length > 0) {
       return _.map(data, (d) => {
@@ -86,7 +88,15 @@ export default class Books extends Vue {
     return '暂无文集';
   }
   mounted() {
-    this.$store.dispatch('books/getBooks');
+    if (this.$store.state.books.books && this.$store.state.books.books.length > 0) {
+      this.storeChange(this.$store.state.books.books);
+      this.activeChange(this.$store.state.books.active);
+    } else {
+      this.$store.dispatch('books/getBooks');
+    }
+  }
+  goback() {
+    router.back();
   }
   showDialog(e: MouseEvent, name: string = '') {
     e.preventDefault();
@@ -138,7 +148,7 @@ export default class Books extends Vue {
       <div>
         <div class="buttonWrap">
           <el-button
-            onClick={this.hideAddBook}
+            onClick={this.goback}
             size="small"
             icon="el-icon-back"
             type="danger"

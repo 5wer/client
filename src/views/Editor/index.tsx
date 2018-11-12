@@ -16,6 +16,9 @@ export default class ArticleManage extends Vue {
       this.show = false;
     }
   }
+  mounted() {
+    this.changeState(this.$store.state.posts.active);
+  }
   render() {
     return (
       <el-container class="editorWrap">

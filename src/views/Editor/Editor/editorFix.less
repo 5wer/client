@@ -25,7 +25,7 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  align-items: center
+  align-items: center;
 }
 #editor-wrap {
   .flex;
@@ -35,15 +35,18 @@
   overflow: hidden;
   #tinymce-wrap {
     .flex;
-    #mceu_23 {
+    .mce-tinymce {
       .flex;
-      #mceu_23-body {
+      .mce-container-body.mce-stack-layout {
         .flex;
-        #mceu_37 {
-          .flex;
-          #tinymce_ifr {
-            flex: 1;
-          }
+      }
+      .mce-toolbar {
+        .flex;
+      }
+      .mce-edit-area {
+        .flex;
+        #tinymce_ifr {
+          flex: 1;
         }
       }
     }

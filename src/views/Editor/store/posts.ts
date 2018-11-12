@@ -115,6 +115,11 @@ export default {
     },
     async removePost({ commit, state }: FuckType, id: string) {
       const { data } = await clearPost(id);
+      Message({
+        type: 'success',
+        message: `删除文章 (${data.id}) 成功`,
+        center: true,
+      });
       if (data) {
         commit('setPosts', _.filter(state.data, (post: FuckType) => post.id !== data.id));
         if (state.current.id === data.id) {

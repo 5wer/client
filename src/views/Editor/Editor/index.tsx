@@ -73,8 +73,13 @@ export default class PostEditor extends Vue {
     };
   }
   mounted() {
+    this.activeChange(this.$store.state.posts.current);
     tinymce.init({});
   }
+  // beforeDestroy() {
+  //   console.log('---beforeDestroy');
+  //   this.$store.commit('posts/setCurrent', {});
+  // }
   triggerArticleAttrabutes() {
     this.showArticleAttrabutes = !this.showArticleAttrabutes;
   }
