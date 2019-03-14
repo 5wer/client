@@ -135,3 +135,37 @@ class MyForm extends Vue {
 ##### Crow升不了级, 薄得跟纸一样, 摸一下就跪, 好吧,我手残!!!
 # 输成狗!!!(2018-10-27)
 ### 貌似目录下的索引文件的的文件名需要是小写的, 比如./Editor/Index.tsx, 引用是写成import('./Editor/Index)会造成找不到模块的导致编译失败(2018-10-27)
+# 命名视图的问题(2018-11-13)
+视图组件貌似需要使用.vue,而.tsx文件是无法识别
+```
+// 路由配置
+...
+{
+    path: '',
+    components: {
+        test4vue: () => import('./Test.vue'), // .vue文件
+        test4tsx: () => import('./Test'), // .tsx文件
+    },
+},
+...
+```
+```
+// 调用
+...
+<router-view name="test4vue" /> // 能显示
+<router-view name="test4tsx" /> // 不能显示
+// Failed to mount component: template or render function not defined.
+...
+```
+设计上是否需要视图路由需要再考虑:
+1. 在路由配置文件里引入组件(命名视图)
+    * 需要时.vue文件;
+    * 传入属性(参数)是静态的,有利于统一修改
+    * 在路由配置中导入一次,调用时使用\<router-view name="xx" \/\>即可
+2. 在组件里直接引入子组件
+    * 可以是.t|jsx
+    * 动态传参数
+    * 调用时比较麻烦,需要先引入再调用
+
+~~入口文件为.vue文件, 然后子组件使用tsx~~\
+上述这种处理好像不行

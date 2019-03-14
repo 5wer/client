@@ -9,10 +9,10 @@ export default class Home extends Vue {
     return (
       <el-row gutter={20}>
         <el-col span={16}>
-          <router-view name="list"></router-view>
+          <router-view name="test" />
         </el-col>
         <el-col span={8}>
-          <router-view name="tweet" />
+          <router-view name="test" />
         </el-col>
       </el-row>
     );

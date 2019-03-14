@@ -28,18 +28,9 @@ export default new Router({
           children: [
             {
               path: '',
-              name: 'slider',
-              component: () => import('./views/Home/Slider'),
-            },
-            {
-              path: '',
-              name: 'list',
-              component: () => import('./views/Home/List'),
-            },
-            {
-              path: '',
-              name: 'tweet',
-              component: () => import('./views/Home/Tweet'),
+              components: {
+                test: () => import('./views/Home/List.vue'),
+              },
             },
           ],
         },
